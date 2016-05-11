@@ -2,3 +2,4 @@ Flask==0.10.1
 gunicorn==0.17.2
 requests==2.7.0
 numpy==1.11.0
+pandas==0.16.2
