@@ -49,8 +49,6 @@ def get_sim():
 
 @app.route('/results/more_<past_val>_hunches', methods=['GET'])
 def more_results(past_val):
-
->>>>>>> 2be9e4f5148fa0cbbe920258002223f31bb8fdb3
     import pdb; pdb.set_trace()
     data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
     return data.to_csv()
