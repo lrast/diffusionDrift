@@ -33,15 +33,15 @@ def get_sim():
     params = {}
     defaults = {'vx':0, 'vy':0, 'D':1, 't':20, 'N':50}
     for key in ['vx', 'vy', 'D', 't', 'N']:
-        if request.form[key] == '':
+        if request.form[key] == u'':
             params[key] = defaults[key]
         else:
             params[key] = float( request.form[key] )
 
     flash(params)
-    trajectory = runSim( [ params['vx'], params['vy'] ], params['D'], params['t'], params['N'] )
+    #trajectory = runSim( [ params['vx'], params['vy'] ], params['D'], params['t'], params['N'] )
 
-    flash(str(type( trajectory)))
+    #flash(str(type( trajectory)))
     return redirect( url_for('serverTest'))
 
 
