@@ -1,11 +1,16 @@
 
 input.box {
   color:black;
-  width: 40pt;
+  width: 60pt;
 }
 
 input.sim {
   color:black;
+}
+
+label.box{
+    text-align: left
+    float:left ;
 }
 
 .flash ul{

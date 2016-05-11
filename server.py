@@ -39,7 +39,7 @@ def get_sim():
             params[key] = float( request.form[key] )
 
     flash(params)
-    trajectory = runSim( [ params['vx'], params['vy'] ], params['D'], int( params['t'] ), int( params['N'] ) )
+    trajectory = runSim( [ params['vx'], params['vy'] ], abs( params['D'] ), max( int( params['t'] ), 1), max( int( params['N'] ), 1) )
 
     flash(str(type( trajectory)))
     return redirect( url_for('serverTest'))

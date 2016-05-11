@@ -35,6 +35,7 @@
           </div>
           </div>
     <div id="pageContent">
+        <p> </p>
         {% with messages = get_flashed_messages() %}
           {% if messages %}
               <div id="flashDiv"> <ul class=flash>
@@ -44,6 +45,10 @@
               </ul> </div>
           {% endif %}
         {% endwith %}
+            <!-- hack for now -->
+        <br>
+        <br>
+        <br>
         {% block body %} {% endblock %}
     </div>
 
