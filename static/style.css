@@ -1,0 +1,12 @@
+
+#pageContent {
+    padding: 2px
+}
+
+div.bar {
+    display: inline-block;
+    width: 20px;
+    height: 75px;
+    background-color: teal;
+    margin-right: 2px;
+}
