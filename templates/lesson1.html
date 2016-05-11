@@ -3,11 +3,12 @@
 {% block body %}
 
 
-     <form action="{{ url_for('get_data') }}" method="POST">
-        <input class='box' type="number" step="any" name='v' text='v'>
-        <input class='box' type="number" step="any" name='D'> 
-        <input class='box' type="number" step="any" name='t'> 
-        <input class='box' type="number" step="any" name='N'> 
+     <form action="{{ url_for('get_sim') }}" method="POST">
+        <input class='box' type="number" step="any" name='vx'  >
+        <input class='box' type="number" step="any" name='vy' >
+        <input class='box' type="number" step="any" name='D' > 
+        <input class='box' type="number" step="any" name='t' > 
+        <input class='box' type="number" step="any" name='N' >
         <input class='sim' type=submit name='action'> 
     </form>
 

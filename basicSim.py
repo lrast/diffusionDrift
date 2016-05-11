@@ -19,6 +19,8 @@ def stepSim(current, v, D, particles):
 def runSim(v, D, timesteps=15, particles=30, initial= [0,0] ):
     # runs the simulation for the given parameters
 
+    v = np.array(v)
+
     positions = np.zeros((particles, 2, timesteps))
 
     current = initialize(particles, initial)
