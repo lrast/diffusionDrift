@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title> Diffusion Drift {% block subtitle %} {% endblock %}</title>
-    <!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -12,6 +12,7 @@
 </head>
 
 <body>
+
     <div class="site-wrapper">
 
       <div class="site-wrapper-inner">
@@ -33,13 +34,22 @@
             </div>
           </div>
           </div>
-              <div id="pageContent">
+    <div id="pageContent">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              <div id="flashDiv"> <ul class=flash>
+              {% for message in messages %}
+                  <li class="flash">{{ message }}</li>
+              {% endfor %}
+              </ul> </div>
+          {% endif %}
+        {% endwith %}
         {% block body %} {% endblock %}
     </div>
 
 
      <form action="{{ url_for('get_data') }}" method=get>
-    <input id='sim' type=submit name='action'> 
+    <input class='sim' type=submit name='action'> 
     </form>
 
     <div id="slider"></div>
@@ -71,7 +81,7 @@
 
         $.get( "/todo/get_data", function( data ) {
         $( ".result" ).html( data );
-            alert( "Load was performed." +data);
+            /* alert( "Load was performed." +data); */
         });
 
 
