@@ -10,3 +10,47 @@ div.bar {
     background-color: teal;
     margin-right: 2px;
 }
+
+
+header {
+    width: 100%;
+    
+    position: fixed;
+
+    left: 0px;
+    right: auto;
+    top: 0px;
+
+    background-color: #C8C8C8;
+
+    margin-bottom: 10px;
+    padding-bottom: 0px
+}
+
+#pageContent{
+    text-align: justify;
+
+    
+
+    margin-top: 100px
+    margin-right: 10%;
+    margin-left: 10%;
+
+}
+
+#navigation {
+    text-align:center;
+    padding: 0px;
+}
+
+#navigation li {
+    display: inline;
+    padding-right: 60px;
+
+    padding-top: 0px;
+    padding-bottom: 0px;
+
+    font-size: 120%;
+    font
+}
+

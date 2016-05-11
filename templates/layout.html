@@ -1,13 +1,24 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title> TITLE {% block subtitle %} {% endblock %}</title>
+    <title> Diffusion Drift {% block subtitle %} {% endblock %}</title>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
     {% block includes %} {% endblock %}
 </head>
 
 <body>
-    <header> </header>
+    <header> 
+        <ol id='navigation'>
+            <li> <a href={{url_for('home')}}> Home </a>  </li>
+            <li> <a href={{url_for('lesson1')}}> Lesson 1 </a>  </li>
+            <li> <a href={{url_for('lesson2')}}> Lesson 2 </a>  </li>
+            <li> <a href={{url_for('lesson3')}}> Lesson 3 </a>  </li>
+            <li> <a href={{url_for('lesson4')}}> Lesson 4 </a>  </li>
+            <li> <a href={{url_for('lesson5')}}> Lesson 5 </a>  </li>
+        </ol> 
+     </header>
+
+
 
     <div id="pageContent">
         <p> </p>
