@@ -3,10 +3,11 @@
 import requests
 import pandas as pd 
 from basicSim import *
-from flask import Flask, render_template, request, url_for, redirect, jsonify
+from flask import Flask, render_template, request, url_for, flash, redirect, jsonify
 
 
 app = Flask(__name__)
+app.secret_key = "notSecret"
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
@@ -14,8 +15,31 @@ def get_tasks():
     #import pdb; pdb.set_trace()
     return jsonify({'tasks': tasks})
 
-@app.route('/todo/get_data', methods=['GET'])
+
+
+
+@app.route('/todo/get_data', methods=['GET', 'POST'])
 def get_data():
+<<<<<<< HEAD
+=======
+    #import pdb; pdb.set_trace()
+    params = float( request.form['v'] )
+
+    
+    a = str( type(params) )
+    flash(a )
+    data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
+
+    return redirect( url_for('serverTest'))  #data.to_csv()
+
+
+
+
+
+@app.route('/results/more_<past_val>_hunches', methods=['GET'])
+def more_results(past_val):
+
+>>>>>>> 2be9e4f5148fa0cbbe920258002223f31bb8fdb3
     import pdb; pdb.set_trace()
     data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
     return data.to_csv()

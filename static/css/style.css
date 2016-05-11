@@ -1,56 +1,24 @@
 
-#pageContent {
-    padding: 2px
+input.box {
+  color:black;
 }
 
-div.bar {
-    display: inline-block;
-    width: 20px;
-    height: 75px;
-    background-color: teal;
-    margin-right: 2px;
+input.sim {
+  color:black;
 }
 
-
-header {
-    width: 100%;
-    
-    position: fixed;
-
-    left: 0px;
-    right: auto;
-    top: 0px;
-
-    background-color: #C8C8C8;
-
-    margin-bottom: 10px;
-    padding-bottom: 0px
+.flash ul{
+    list-style: none;
 }
 
-#pageContent{
-    text-align: justify;
-
-    
-
-    margin-top: 100px
-    margin-right: 10%;
-    margin-left: 10%;
-
-}
-
-#navigation {
-    text-align:center;
-    padding: 0px;
-}
-
-#navigation li {
+.flash li{
     display: inline;
-    padding-right: 60px;
+}
 
-    padding-top: 0px;
-    padding-bottom: 0px;
-
-    font-size: 120%;
-    font
+#flashDiv {
+    position: absolute;
+    
+    bottom: 0;
+    left: 0;
 }
 
