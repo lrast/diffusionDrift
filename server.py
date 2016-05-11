@@ -35,8 +35,9 @@ def get_tasks():
 @app.route('/todo/get_data', methods=['GET', 'POST'])
 def get_data():
     #import pdb; pdb.set_trace()
-    v = float( request.form['v'] )
+    params = float( request.form['v'] )
 
+    
     a = str( type(params) )
     flash(a )
     data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
