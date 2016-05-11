@@ -8,20 +8,6 @@ from flask import Flask, render_template, request, url_for, redirect, jsonify
 
 app = Flask(__name__)
 
-tasks = [
-    {
-        'id': 1,
-        'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
-        'done': False
-    },
-    {
-        'id': 2,
-        'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web', 
-        'done': False
-    }
-]
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
@@ -30,13 +16,8 @@ def get_tasks():
 
 @app.route('/todo/get_data', methods=['GET'])
 def get_data():
-    data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
-    return data.to_csv()
-
-@app.route('/results/more_<past_val>_hunches', methods=['GET'])
-def more_results(past_val):
-
     import pdb; pdb.set_trace()
+    data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
     return data.to_csv()
 
 @app.route('/')
