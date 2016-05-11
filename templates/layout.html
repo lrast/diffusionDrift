@@ -38,6 +38,11 @@
     </div>
 
 
+     <form action="{{ url_for('get_data') }}" method=get>
+    <input id='sim' type=submit name='action'> 
+    </form>
+
+    <div id="slider"></div>
           <div class="mastfoot">
             <div class="inner">
               <p></p>
@@ -58,6 +63,20 @@
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{{ url_for('static', filename='js/myscript.js') }}"></script>
+    <script src="/static/js/myscript.js"></script>
+    
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="/static/js/d3.slider.js"></script>
+    <script>
+
+        $.get( "/todo/get_data", function( data ) {
+        $( ".result" ).html( data );
+            alert( "Load was performed." +data);
+        });
+
+
+        
+
+    </script>
   </body>
 </html>

@@ -2,6 +2,7 @@
 
 import requests
 import pandas as pd 
+from basicSim import *
 from flask import Flask, render_template, request, url_for, redirect, jsonify
 
 
@@ -24,15 +25,19 @@ tasks = [
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
-    import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
     return jsonify({'tasks': tasks})
 
-@app.route('/todo/data', methods=['GET'])
+@app.route('/todo/get_data', methods=['GET'])
 def get_data():
-    import pdb; pdb.set_trace()
     data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
     return data.to_csv()
 
+@app.route('/results/more_<past_val>_hunches', methods=['GET'])
+def more_results(past_val):
+
+    import pdb; pdb.set_trace()
+    return data.to_csv()
 
 @app.route('/')
 def home():
