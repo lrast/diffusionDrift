@@ -2,28 +2,62 @@
 <html lang="en">
 <head>
     <title> Diffusion Drift {% block subtitle %} {% endblock %}</title>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+     <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/cover.css') }}">
     {% block includes %} {% endblock %}
 </head>
 
 <body>
-    <header> 
-        <ol id='navigation'>
-            <li> <a href={{url_for('home')}}> Home </a>  </li>
-            <li> <a href={{url_for('lesson1')}}> Lesson 1 </a>  </li>
-            <li> <a href={{url_for('lesson2')}}> Lesson 2 </a>  </li>
-            <li> <a href={{url_for('lesson3')}}> Lesson 3 </a>  </li>
-            <li> <a href={{url_for('lesson4')}}> Lesson 4 </a>  </li>
-            <li> <a href={{url_for('lesson5')}}> Lesson 5 </a>  </li>
-        </ol> 
-     </header>
+    <div class="site-wrapper">
 
+      <div class="site-wrapper-inner">
 
-
-    <div id="pageContent">
-        <p> </p>
+        <div class="cover-container">
+        <div>
+          <div class="masthead clearfix">
+            <div class="inner">
+              <nav>
+                <ul class="nav masthead-nav">
+                    <li> <a href={{url_for('home')}}> Home </a>  </li>
+                    <li> <a href={{url_for('lesson1')}}> Lesson 1 </a>  </li>
+                    <li> <a href={{url_for('lesson2')}}> Lesson 2 </a>  </li>
+                    <li> <a href={{url_for('lesson3')}}> Lesson 3 </a>  </li>
+                    <li> <a href={{url_for('lesson4')}}> Lesson 4 </a>  </li>
+                    <li> <a href={{url_for('lesson5')}}> Lesson 5 </a>  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          </div>
+              <div id="pageContent">
         {% block body %} {% endblock %}
     </div>
 
-</body>
-</hmtl>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p></p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{{ url_for('static', filename='js/myscript.js') }}"></script>
+  </body>
+</html>
