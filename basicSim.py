@@ -18,16 +18,18 @@ def stepSim(current, v, D, particles):
 
 def makeHists(positions, xyind):
     # set up the bins of the histogram
-    histmin = int( np.min(positions[:,xyind,:])) -1
-    histmax = int( np.max(positions[:,xyind,:])) +1
-    bins = np.linspace(histmin, histmax, histmax-histmin+1)
-    middles = 0.5 + bins[:-1]
+    histmin = np.min(positions[:,xyind,:])
+    histmax = np.max(positions[:,xyind,:])
+    delta = (histmax - histmin) / 21
+    bins = np.linspace(histmin, histmax, 21)  # we want 20 bins total
 
     # one dictionary per time point
+
+
     fullList = []
     for timepoint in range(positions.shape[2]):
-        currDict = {middles[i]: np.histogram( positions[:,xyind,timepoint], bins)[0][i] for i in range(len(middles)) }
-        fullList.append(currDict)
+        currPoints = [ { 't': timepoint, 'dx': delta, 'x': bins[i], 'y': np.histogram( positions[:,xyind,timepoint], bins)[0][i]} for i in range(len(bins[:-1]))  ] 
+        fullList.extend(currPoints)
 
     return fullList
 
