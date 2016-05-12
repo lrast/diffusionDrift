@@ -5,9 +5,6 @@
 {% endblock %}
 {% block body %}
 
-{% include "form.html" %} 
-
-
     <p> </p>
 
     <p>
@@ -21,8 +18,25 @@
     <div>
     <img src="{{ url_for('static', filename='bluesmoke-1.gif') }}" alt="smoke flow" width=600px>
     </div>
+    (source: <a href="http://giphy.com/gifs/3oEduWf29pBBB9qMi4" > http://giphy.com/gifs/3oEduWf29pBBB9qMi4</a>)
 
+    <p>
+    <br>
+    <br>
     So, if we watch a group of particles, the strength of diffusion corresponds to the rate of spread of the particles, while the strength of the drift corresponds to the rate of movement in one specific direction. Here is a simulation.
+    </p>
+
+    <div>
+    <br>
+
+
+    {% include "form.html" %} 
+
+    Where vx and vy are the components of the drift velocity, D is the strength of the diffusion coefficient, N is the number of particles, and t is the number of timesteps.
+
+    </div>
+    <br>
+    <br>
 
     <script>
         $.get( "/get_sim" , function( data ) {
