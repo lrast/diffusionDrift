@@ -52,21 +52,6 @@
         {% block body %} {% endblock %}
     </div>
 
-
-     <form action="{{ url_for('get_data') }}" method=get>
-    <input id='sim' type=submit name='action'> 
-      <fieldset class="form-group">
-        <label for="formGroupExampleInput">Example label</label>
-        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-      </fieldset>
-
-      <fieldset class="form-group">
-        <label for="formGroupExampleInput2">Another label</label>
-        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-      </fieldset>
-        <input class='sim' type=submit name='action'> 
-    </form>
-
     <div id="slider"></div>
           <div class="mastfoot">
             <div class="inner">
@@ -93,16 +78,6 @@
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="/static/js/d3.slider.js"></script>
     <script src="/static/js/scatter.js"></script>
-    <script>
-
-        $.get( "/todo/get_data", function( data ) {
-        $( ".result" ).html( data );
-            /* alert( "Load was performed." +data); */
-        });
-
-
-        
-
-    </script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
   </body>
 </html>

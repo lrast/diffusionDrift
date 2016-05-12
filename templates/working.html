@@ -1,9 +1,116 @@
 {% extends "layout.html" %}
 {% block subtitle %} Working {% endblock %}
 {% block includes %} 
-    {# <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script> #}
-    <script type="text/javascript" src="{{ url_for('static', filename='d3.v2.min.js') }}"></script>
-    <!--<script type="text/javascript" src="{{ url_for('static', filename='exampleRun.js') }}"></script> -->
+    
+    <html>
+	<head>
+	<script>
+	var data = {{ data|tojson }};
+	JSONObject = JSON.parse(data)
+	</script>
+	<script src="//d3js.org/d3.v3.min.js"></script>
+	<body>
+
+	<button onclick="alert(someJavaScriptVar)" />
+	</body>
+	</html>
+
+
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+</style>
+<body>
+
+<script>
+
+
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 500 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var color = d3.scale.category10();
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+function draw(data) {
+
+  data.forEach(function(d) {
+    d.y = +d.y;
+    d.x = +d.x;
+  });
+
+  x.domain(d3.extent(data, function(d) { return d.x; })).nice();
+  y.domain(d3.extent(data, function(d) { return d.y; })).nice();
+
+ function update(data,i) {
+
+	svg.selectAll(".dot").remove()
+	svg.selectAll(".dot")
+	  .data(data)
+	  .enter().append("circle")
+	  .filter(function(d) { return d.t == i})
+	  .attr("class", "dot")
+	  .attr("r", 3.5)
+	  .attr("cx", function(d) { return x(d.x); })
+	  .attr("cy", function(d) { return y(d.y); })
+  }
+  	update(data, 1);
+
+	var i = 1;                     //  set your counter to 1
+
+	function myLoop () {           //  create a loop function
+	   setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+	      update(data, i);         //  your code here
+	      i++;                     //  increment the counter
+	      if (i < {{time}}) {            //  if the counter < 10, call the loop function
+	         myLoop();             //  ..  again which will trigger another 
+	      }                        //  ..  setTimeout()
+	   }, 1)
+	}
+                      //  start the loop
+ 	myLoop()
+
+};
+
+draw(JSONObject);
+
+</script>
+
 {% endblock %}
 {% block body %}
 <p> Working page </p>

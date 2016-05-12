@@ -2,13 +2,17 @@
 
 import requests
 import pandas as pd 
+import StringIO
+import json
 from basicSim import *
 from flask import Flask, render_template, request, url_for, flash, redirect, jsonify
-
+import os
+from flask import make_response
+from functools import wraps, update_wrapper
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "notSecret"
-
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
@@ -16,18 +20,18 @@ def get_tasks():
     return jsonify({'tasks': tasks})
 
 
-@app.route('/todo/get_data', methods=['GET', 'POST'])
-def get_data():
+# @app.route('/todo/get_data', methods=['GET', 'POST'])
+# def get_data():
 
-    #import pdb; pdb.set_trace()
-    params = float( request.form['v'] )
+#     #import pdb; pdb.set_trace()
+#     params = float( request.form['v'] )
 
-    data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
+#     data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
 
-    return redirect( url_for('serverTest'))  #data.to_csv()
+#     return redirect( url_for('serverTest'))  #data.to_csv()
 
 
-@app.route('/todo/get_sim', methods=['GET', 'POST'])
+@app.route('/get_sim', methods=['GET', 'POST'])
 def get_sim():
     from basicSim import runSim
     params = {}
@@ -36,16 +40,19 @@ def get_sim():
         if request.form[key] == u'':
             params[key] = defaults[key]
         else:
-            params[key] = float( request.form[key] )
+            params[key] = float(request.form[key])
 
     flash(params)
     trajectory = runSim( [ params['vx'], params['vy'] ], abs( params['D'] ), max( int( params['t'] ), 1), max( int( params['N'] ), 1) )
-
-    flash(str(type( trajectory)))
-    return redirect( url_for('serverTest'))
-
-
-
+    
+    sim_data = []
+    for i in range(int(params['t'])):
+        x= [i for j in range(len(trajectory[:,:,i].tolist()))]
+        sim_data.append(zip(x,trajectory[:,0,i].tolist(),trajectory[:,1,i].tolist()))
+    x = np.asarray(sim_data).tolist()
+    data = [j[0] for j in x for j[0] in j]
+    result = json.dumps([{"t": j[0], "x":j[1], "y": j[2]} for j in data])
+    return render_template("working.html", data=result, time = int(params['t']))
 
 @app.route('/results/more_<past_val>_hunches', methods=['GET'])
 def more_results(past_val):
