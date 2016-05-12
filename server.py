@@ -2,6 +2,8 @@
 
 import requests
 import pandas as pd 
+import cStringIO
+import json
 from basicSim import *
 from flask import Flask, render_template, request, url_for, flash, redirect, jsonify
 
@@ -27,7 +29,7 @@ def get_data():
     return redirect( url_for('serverTest'))  #data.to_csv()
 
 
-@app.route('/todo/get_sim', methods=['GET', 'POST'])
+@app.route('/get_sim', methods=['GET', 'POST'])
 def get_sim():
     from basicSim import runSim
     params = {}
@@ -40,11 +42,21 @@ def get_sim():
 
     flash(params)
     trajectory = runSim( [ params['vx'], params['vy'] ], abs( params['D'] ), max( int( params['t'] ), 1), max( int( params['N'] ), 1) )
+    sim_data = []
+    sim_data = []
+    for i in range(params['t']):
+        x= [i for j in range(len(trajectory[:,:,i].tolist()))]
+        sim_data.append(zip(x,trajectory[:,0,i].tolist(),trajectory[:,1,i].tolist()))
+    sim_data = np.asarray(sim_data).tolist()
 
-    flash(str(type( trajectory)))
-    return redirect( url_for('serverTest'))
-
-
+    #f = open('data.tsv', 'w')
+    #for i in sim_data:
+    #    for j in i:
+    #     f.write(str(j[0])+"\t"+str(j[1])+"\t"+str(j[2])+"\n")
+    #f.close
+    
+    return render_template("working.html")
+    
 
 
 @app.route('/results/more_<past_val>_hunches', methods=['GET'])

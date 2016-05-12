@@ -1,37 +1,42 @@
 {% extends "layout.html" %}
 {% block subtitle %} Lesson 1 {% endblock %}
 {% block body %}
-<br>
-Lorem ipsum dolor sit amet, eu mucius temporibus sit. Quem feugiat ei quo, eum ad nostrud adversarium. Putant ponderum mei ex, prompta splendide inciderint mei et, ad per audiam latine singulis. Has eu diceret signiferumque, usu aliquid impedit hendrerit id, eos et vidit lorem saepe. Duis denique delicatissimi qui no, audiam labores commune ut ius. Te solum veniam albucius quo, unum dolores neglegentur eos ex. Vix illum aliquip instructior ea, te paulo euripidis quo.
-
-Amet electram his ea. Vis rebum quidam postulant et, tritani accumsan has et, ea dolores molestie comprehensam his. Adhuc dicta an his, cum ridens dolorum efficiendi et. At quo quem volutpat philosophia, ei malis audiam quo. Pri labore delenit euripidis ei, fabulas accusata suavitate pro ut. Duis civibus definitionem in has, congue sadipscing ea vis.
-
  <form action="{{ url_for('get_sim') }}" method="POST">
     <fieldset class="form-group">
-        <label for="vx" class="box">vx</label>
-        <input class="form-control box" type="number" step="any" name='vx' placeholder="0"  >
-        <label for="vx" class="box">vy</label>
-        <input class="form-control box" type="number" step="any" name='vy' placeholder="0"  >
-        <label for="vx" class="box">D</label>
-        <input class="form-control box" type="number" step="any" name='D' placeholder="1"  >
-        <label for="vx" class="box">t</label>
-        <input class="form-control box" type="number" step="any" name='t' placeholder="20"  >
-        <label for="vx" class="box">N</label>
-        <input class="form-control box" type="number" step="any" name='N' placeholder="50"  >
+    <div class="form-group row">
+        <label class="col-sm-1 form-control-label">vx</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='vx' placeholder="0"  >
+        </div>  
+        <label class="col-sm-1 form-control-label">vy</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='vy' placeholder="0"  >
+        </div>
+        <label class="col-sm-1 form-control-label">N</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='N' placeholder="50"  >
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-1 form-control-label">D</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='D' placeholder="1"  >
+        </div>
+        <label class="col-sm-1 form-control-label">t</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='t' placeholder="20"  >
+        </div>
+    </div>
+    <div class="form-group row">
+        
+        </div>
     </fieldset>
     <input class='sim' type=submit name='action'> 
 </form>
-
-
-
-Lorem ipsum dolor sit amet, eu mucius temporibus sit. Quem feugiat ei quo, eum ad nostrud adversarium. Putant ponderum mei ex, prompta splendide inciderint mei et, ad per audiam latine singulis. Has eu diceret signiferumque, usu aliquid impedit hendrerit id, eos et vidit lorem saepe. Duis denique delicatissimi qui no, audiam labores commune ut ius. Te solum veniam albucius quo, unum dolores neglegentur eos ex. Vix illum aliquip instructior ea, te paulo euripidis quo.
-
-Amet electram his ea. Vis rebum quidam postulant et, tritani accumsan has et, ea dolores molestie comprehensam his. Adhuc dicta an his, cum ridens dolorum efficiendi et. At quo quem volutpat philosophia, ei malis audiam quo. Pri labore delenit euripidis ei, fabulas accusata suavitate pro ut. Duis civibus definitionem in has, congue sadipscing ea vis.
-
-Pri blandit percipit gloriatur at, qui utroque sensibus mediocritatem te, congue conclusionemque eos ut. Enim laudem admodum est cu, pri affert altera te, ius te commodo insolens voluptaria. Ea fuisset adipiscing sed, ea eruditi pertinax expetendis per. Iuvaret molestiae theophrastus te vel, sit dicam feugiat expetenda ex. Ei bonorum recusabo abhorreant has, duo eirmod aeterno tincidunt ei. Pro in noster abhorreant, has sint doctus ne, nam autem impedit at.
-
-Dicta detraxit nec in, at cum atqui ignota, cu clita aliquip euismod vis. An usu tempor rationibus vituperata. Et legere everti adversarium vis, et nec eius patrioque. Sed ea aliquam fierent adipiscing, ne ullum dolores per.
-
-Vivendo delicata sed ea, te diceret mediocritatem per. Te cum insolens rationibus, ex mea eruditi voluptaria. Pri te clita graeco vocibus, sea cu mazim delectus. Illud sonet intellegat ex eos, an labores laoreet efficiantur sit. Eam in etiam postulant, cum alii delicata ei, nec cu possit platonem mandamus.
-
+    <script>
+        $.get( "/get_sim" , function( data ) {
+        $( ".result" ).html( data );
+             alert( "Load was performed." +data); 
+        });
+    </script>
 {%endblock %}
