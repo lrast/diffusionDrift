@@ -35,7 +35,7 @@ def get_tasks():
 def get_sim():
     from basicSim import runSim
     params = {}
-    defaults = {'vx':0, 'vy':0, 'D':1, 't':100, 'N':50}
+    defaults = {'vx':0, 'vy':0, 'D':0.01, 't':100, 'N':50}
     for key in ['vx', 'vy', 'D', 't', 'N']:
         if request.form[key] == u'':
             params[key] = defaults[key]

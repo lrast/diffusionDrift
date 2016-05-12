@@ -38,10 +38,6 @@
     <br>
     <br>
 
-    <script>
-        $.get( "/get_sim" , function( data ) {
-        $( ".result" ).html( data );
-             alert( "Load was performed." +data); 
-        });
-    </script>
+    {% include "form.html" %} 
+
 {%endblock %}
