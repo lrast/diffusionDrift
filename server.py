@@ -49,12 +49,13 @@ def get_sim():
         sim_data.append(zip(x,trajectory[:,0,i].tolist(),trajectory[:,1,i].tolist()))
     sim_data = np.asarray(sim_data).tolist()
 
-    #f = open('data.tsv', 'w')
-    #for i in sim_data:
-    #    for j in i:
-    #     f.write(str(j[0])+"\t"+str(j[1])+"\t"+str(j[2])+"\n")
-    #f.close
-    
+    f = open('static/data.tsv', 'w')
+    f.write("time\tx\ty\n")
+    for i in sim_data:
+       for j in i:
+        f.write(str(j[0])+"\t"+str(j[1])+"\t"+str(j[2])+"\n")
+    f.close
+
     return render_template("working.html")
     
 

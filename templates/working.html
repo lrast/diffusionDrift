@@ -1,25 +1,16 @@
 {% extends "layout.html" %}
 {% block subtitle %} Working {% endblock %}
 {% block includes %} 
-    {# <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script> #}
-    <script type="text/javascript" src="{{ url_for('static', filename='d3.v2.min.js') }}"></script>
-    <!--<script type="text/javascript" src="{{ url_for('static', filename='exampleRun.js') }}"></script> -->
-
-
+    
     <html>
 	<head>
-	<script>
-	var someJavaScriptVar = '{{data }}';
-	</script>
+	</head>
+	<script src="//d3js.org/d3.v3.min.js"></script>
 	<body>
-	<p>Hello World</p>
-	<p>Hello World</p>
-	<p>Hello World</p>
-	<p>Hello World</p>
-	<p>Hello World</p>
-	<button onclick="alert(someJavaScriptVar)" />
+
 	</body>
 	</html>
+
 
 <style>
 
@@ -40,11 +31,11 @@ body {
 
 </style>
 <body>
-<script src="//d3js.org/d3.v3.min.js"></script>
+
 <script>
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
+    width = 500 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 var x = d3.scale.linear()
@@ -69,18 +60,18 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.tsv("{{ url_for('static', filename='data/data.tsv') }}", function(error, data) {
+d3.tsv("{{ url_for('static', filename='data.tsv') }}", function(error, data) {
   if (error) throw error;
 
   data.forEach(function(d) {
-    d.sepalLength = +d.sepalLength;
-    d.sepalWidth = +d.sepalWidth;
+    d.y = +d.y;
+    d.x = +d.x;
   });
 
-  x.domain(d3.extent(data, function(d) { return d.sepalWidth; })).nice();
-  y.domain(d3.extent(data, function(d) { return d.sepalLength; })).nice();
+  x.domain(d3.extent(data, function(d) { return d.x; })).nice();
+  y.domain(d3.extent(data, function(d) { return d.y; })).nice();
 
-  
+
   // svg.append("g")
   //     .attr("class", "x axis")
   //     .attr("transform", "translate(0," + height + ")")
@@ -103,15 +94,37 @@ d3.tsv("{{ url_for('static', filename='data/data.tsv') }}", function(error, data
   //     .style("text-anchor", "end")
   //     .text("Sepal Length (cm)")
 
+  function update(data, i) {
+
+  svg.selectAll(".dot").remove()
   svg.selectAll(".dot")
       .data(data)
     .enter().append("circle")
+    .filter(function(d) { return d.time == i})
       .attr("class", "dot")
       .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.sepalWidth); })
-      .attr("cy", function(d) { return y(d.sepalLength); })
-      .style("fill", function(d) { return color(d.species); });
+      .attr("cx", function(d) { return x(d.x); })
+      .attr("cy", function(d) { return y(d.y); })
+      //.style("fill", function(d) { return color(d.time); });
+	}
 
+// The initial display.
+update(data, 1);
+
+var i = 1;                     //  set your counter to 1
+
+function myLoop () {           //  create a loop function
+   setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+      update(data, i);         //  your code here
+      i++;                     //  increment the counter
+      if (i < 10) {            //  if the counter < 10, call the loop function
+         myLoop();             //  ..  again which will trigger another 
+      }                        //  ..  setTimeout()
+   }, 300)
+}
+
+myLoop();                      //  start the loop
+  
   // var legend = svg.selectAll(".legend")
   //     .data(color.domain())
   //   .enter().append("g")
