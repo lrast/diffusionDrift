@@ -43,7 +43,7 @@ def get_sim():
             params[key] = float(request.form[key])
 
     flash(params)
-    trajectory = runSim( [ params['vx'], params['vy'] ], abs( params['D'] ), max( int( params['t'] ), 1), max( int( params['N'] ), 1) )
+    trajectory, xyhist = runSim( [ params['vx'], params['vy'] ], abs( params['D'] ), max( int( params['t'] ), 1), max( int( params['N'] ), 1) )
     
     sim_data = []
     for i in range(int(params['t'])):
@@ -51,7 +51,10 @@ def get_sim():
         sim_data.append(zip(x,trajectory[:,0,i].tolist(),trajectory[:,1,i].tolist()))
     x = np.asarray(sim_data).tolist()
     data = [j[0] for j in x for j[0] in j]
+
     result = json.dumps([{"t": j[0], "x":j[1], "y": j[2]} for j in data])
+    resulthist = json.dumps(xyhist)
+
     return render_template("working.html", data=result, time = int(params['t']))
 
 @app.route('/results/more_<past_val>_hunches', methods=['GET'])

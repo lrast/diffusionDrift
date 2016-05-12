@@ -16,7 +16,24 @@ def stepSim(current, v, D, particles):
     nextSpots = current + getDeltas(v, D, particles)
     return nextSpots
 
-def runSim(v, D, timesteps=15, particles=30, initial= [0,0] ):
+def makeHists(positions, xyind):
+    # set up the bins of the histogram
+    histmin = int( np.min(positions[:,xyind,:])) -1
+    histmax = int( np.max(positions[:,xyind,:])) +1
+    bins = np.linspace(histmin, histmax, histmax-histmin+1)
+    middles = 0.5 + bins[:-1]
+
+    # one dictionary per time point
+    fullList = []
+    for timepoint in range(positions.shape[2]):
+        currDict = {middles[i]: np.histogram( positions[:,xyind,timepoint], bins)[0][i] for i in range(len(middles)) }
+        fullList.append(currDict)
+
+    return fullList
+
+
+
+def runSim(v, D, timesteps=15, particles=30, initial= [0,0]):
     # runs the simulation for the given parameters
 
     v = np.array(v)
@@ -31,5 +48,8 @@ def runSim(v, D, timesteps=15, particles=30, initial= [0,0] ):
         positions[:,:, index] = nextPositions
         current = nextPositions
 
-    return positions
+
+    xyhist = {'x': makeHists(positions, 0), 'y': makeHists(positions, 1) }
+
+    return positions, xyhist
 
