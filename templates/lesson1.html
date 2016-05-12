@@ -1,6 +1,26 @@
 {% extends "layout.html" %}
 {% block subtitle %} Lesson 1 {% endblock %}
 {% block body %}
+    <p> </p>
+
+    <p>
+    In any fluid, like air or water, there are multiple ways that particles can be moved or transported around. The two major ways this transport occurs are diffusion and drift. 
+
+    Imagine that someone is cooking food in the kitchen. The smell will travel slowly through the house, gradually encompassing everything. This is diffusive transport. Importantly, ignoring the effects of walls or people moving around, diffusion will transport particles equally in every direction. This is called isotropy. Diffusive behaviors act to spread particles out over time without preference for the direction of spread. 
+    </p>
+    <p>
+    In contrast, drift (or convection) behaviors transport fluid preferentially in a given direction, anisotropically. Imagine water flowing in a stream. The vast majority of the flow of water is in one direction. This is a drift-dominated flow. Furthermore, the water is being moved relatively uniformly: the water that is at a given point in the stream will, for the most part, move down-stream as a group, rather than spreading out as it goes. Actually, these behaviors often occur together, a classic example is movement of smoke, which goes from a drift-dominated (laminar) flow to a diffusion-dominated (turbulent) flow as it cools down away from a flame.
+    </p>
+    <div>
+    <img src="{{ url_for('static', filename='bluesmoke-1.gif') }}" alt="smoke flow" width=600px>
+    </div>
+
+    So, if we watch a group of particles, the strength of diffusion corresponds to the rate of spread of the particles, while the strength of the drift corresponds to the rate of movement in one specific direction. Here is a simulation.
+
+
+
+
+
  <form action="{{ url_for('get_sim') }}" method="POST">
     <fieldset class="form-group">
     <div class="form-group row">
