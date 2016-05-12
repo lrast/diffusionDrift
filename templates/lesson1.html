@@ -5,11 +5,6 @@
 {% endblock %}
 {% block body %}
 
-{% include "form.html" %} 
-
-{% endblock %}
-
-
     <p> </p>
 
     <p>
@@ -26,10 +21,6 @@
 
     So, if we watch a group of particles, the strength of diffusion corresponds to the rate of spread of the particles, while the strength of the drift corresponds to the rate of movement in one specific direction. Here is a simulation.
 
-    <script>
-        $.get( "/get_sim" , function( data ) {
-        $( ".result" ).html( data );
-             alert( "Load was performed." +data); 
-        });
-    </script>
+    {% include "form.html" %} 
+
 {%endblock %}

@@ -1,7 +1,5 @@
-{% extends "layout.html" %}
-{% block subtitle %} Lesson 3 {% endblock %}
-{% block includes %} 
-
+<!DOCTYPE html>
+<meta charset="utf-8">
 <style>
 
 .chart rect {
@@ -14,15 +12,9 @@
   text-anchor: end;
 }
 
-
 </style>
-
-<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-{% endblock %}
-{% block body %}
-
 <svg class="chart"></svg>
-
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
 
 var data = [4, 8, 15, 16, 23, 42];
@@ -34,7 +26,7 @@ var x = d3.scale.linear()
     .domain([0, d3.max(data)])
     .range([0, width]);
 
-var chart = d3.select("#chart")
+var chart = d3.select(".chart")
     .attr("width", width)
     .attr("height", barHeight * data.length);
 
@@ -54,5 +46,3 @@ bar.append("text")
     .text(function(d) { return d; });
 
 </script>
-
-{%endblock %}
