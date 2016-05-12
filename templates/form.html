@@ -1,0 +1,32 @@
+ <form action="{{ url_for('get_sim') }}" method="POST">
+    <fieldset class="form-group">
+    <div class="form-group row">
+        <label class="col-sm-1 form-control-label">vx</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='vx' placeholder="0"  >
+        </div>  
+        <label class="col-sm-1 form-control-label">vy</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='vy' placeholder="0"  >
+        </div>
+        <label class="col-sm-1 form-control-label">N</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='N' placeholder="50"  >
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-1 form-control-label">D</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='D' placeholder="1"  >
+        </div>
+        <label class="col-sm-1 form-control-label">t</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='t' placeholder="20"  >
+        </div>
+    </div>
+    <div class="form-group row">
+        
+        </div>
+    </fieldset>
+    <input class='sim' type=submit name='action'> 
+</form>

@@ -1,20 +1,15 @@
 {% extends "layout.html" %}
 {% block subtitle %} Working {% endblock %}
 {% block includes %} 
-    
-    <html>
-	<head>
-	<script>
-	var data = {{ data|tojson }};
-	JSONObject = JSON.parse(data)
-	</script>
-	<script src="//d3js.org/d3.v3.min.js"></script>
-	<body>
 
-	<button onclick="alert(someJavaScriptVar)" />
-	</body>
-	</html>
+{% endblock %}
+{% block body %}
+{% include "form.html" %} 
 
+<div id="plot">
+    </div>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
 
 <style>
 
@@ -34,11 +29,11 @@ body {
 }
 
 </style>
-<body>
 
 <script>
 
-
+var data = {{ data|tojson }};
+JSONObject = JSON.parse(data)
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 500 - margin.left - margin.right,
@@ -60,7 +55,7 @@ var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#plot").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -79,31 +74,31 @@ function draw(data) {
 
  function update(data,i) {
 
-	svg.selectAll(".dot").remove()
-	svg.selectAll(".dot")
-	  .data(data)
-	  .enter().append("circle")
-	  .filter(function(d) { return d.t == i})
-	  .attr("class", "dot")
-	  .attr("r", 3.5)
-	  .attr("cx", function(d) { return x(d.x); })
-	  .attr("cy", function(d) { return y(d.y); })
+  svg.selectAll(".dot").remove()
+  svg.selectAll(".dot")
+    .data(data)
+    .enter().append("circle")
+    .filter(function(d) { return d.t == i})
+    .attr("class", "dot")
+    .attr("r", 3.5)
+    .attr("cx", function(d) { return x(d.x); })
+    .attr("cy", function(d) { return y(d.y); })
   }
-  	update(data, 1);
+    update(data, 1);
 
-	var i = 1;                     //  set your counter to 1
+  var i = 1;                     //  set your counter to 1
 
-	function myLoop () {           //  create a loop function
-	   setTimeout(function () {    //  call a 3s setTimeout when the loop is called
-	      update(data, i);         //  your code here
-	      i++;                     //  increment the counter
-	      if (i < {{time}}) {            //  if the counter < 10, call the loop function
-	         myLoop();             //  ..  again which will trigger another 
-	      }                        //  ..  setTimeout()
-	   }, 1)
-	}
+  function myLoop () {           //  create a loop function
+     setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+        update(data, i);         //  your code here
+        i++;                     //  increment the counter
+        if (i < {{time}}) {            //  if the counter < 10, call the loop function
+           myLoop();             //  ..  again which will trigger another 
+        }                        //  ..  setTimeout()
+     }, 1)
+  }
                       //  start the loop
- 	myLoop()
+  myLoop()
 
 };
 
@@ -111,9 +106,69 @@ draw(JSONObject);
 
 </script>
 
-{% endblock %}
-{% block body %}
-<p> Working page </p>
+<script type="text/javascript">
+  
+
+// Generate a Bates distribution of 10 random variables.
+var values_hist = d3.range(1000).map(d3.random.bates(10));
+
+// A formatter for counts.
+var formatCount = d3.format(",.0f");
+
+var margin_hist = {top: 10, right: 30, bottom: 30, left: 30},
+    width_hist = 400 - margin_hist.left - margin_hist.right,
+    height_hist = 200 - margin_hist.top - margin_hist.bottom;
+
+var x_hist = d3.scale.linear()
+    .domain([0, 1])
+    .range([0, width_hist]);
+
+// Generate a histogram using twenty uniformly-spaced bins.
+var data_hist = d3.layout.histogram()
+    .bins(x_hist.ticks(20))
+    (values);
+
+var y_hist = d3.scale.linear()
+    .domain([0, d3.max(data_hist, function(d) { return d.y; })])
+    .range([height_hist, 0]);
+
+var xAxis_hist = d3.svg.axis()
+    .scale(x_hist)
+    .orient("bottom");
+
+var svg_hist = d3.select("plot").append("svg")
+    .attr("width", width_hist + margin_hist.left + margin_hist.right)
+    .attr("height", height_hist + margin_hist.top + margin_hist.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin_hist.left + "," + margin_hist.top + ")");
+
+var bar_hist = svg.selectAll(".bar")
+    .data(data_hist)
+  .enter().append("g")
+    .attr("class", "bar")
+    .attr("transform", function(d) { return "translate(" + x_hist(d.x) + "," + y_hist(d.y) + ")"; });
+
+bar_hist.append("rect")
+    .attr("x", 1)
+    .attr("width", x_hist(data_hist[0].dx) - 1)
+    .attr("height", function(d) { return height_hist - y_hist(d.y); });
+
+bar_hist.append("text")
+    .attr("dy", ".75em")
+    .attr("y", 6)
+    .attr("x", x_hist(data_hist[0].dx) / 2)
+    .attr("text-anchor", "middle")
+    .text(function(d) { return formatCount(d.y); });
+
+svg_hist.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height_hist + ")")
+    .call(xAxis_hist);
 
 
+</script>
+
 {% endblock %}
+
+
+
