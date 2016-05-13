@@ -1,4 +1,4 @@
- <form action="{{ url_for('get_sim') }}" method="POST">
+<form id="myForm" method="POST">
     <fieldset class="form-group">
     <div class="form-group row">
         <label class="col-sm-1 form-control-label">vx</label>
@@ -24,9 +24,43 @@
             <input class="form-control" type="number" step="any" name='t' placeholder="20"  >
         </div>
     </div>
-    <div class="form-group row">
-        <input class='sim' type=submit name='action'> 
-        </div>
     </fieldset>
     
 </form>
+
+
+<button id="btnSave">Save Click</button>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+
+
+<script>
+  
+  $(document).ready(function () {
+
+        $("#btnSave").click(
+            function () {
+                
+              var values = {};
+              $.each($('#myForm').serializeArray(), function(i, field) {
+                  values[field.name] = +field.value;
+
+              });
+
+              $.get('/get_data', values, 
+                   function(data) 
+                    { $( ".scatter_plot" ).remove();
+                      jsondata = JSON.parse(data);
+                      scatter = jsondata['scatter'];
+                      hist = jsondata['hist'];
+                      console.log(scatter);
+                      console.log(hist);
+                      drawfigure(scatter ,hist,values['t']) ;
+                    }
+                   );
+
+            }            
+        );
+    });
+
+</script>

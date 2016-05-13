@@ -1,10 +1,70 @@
-{% extends "layout.html" %}
-{% block subtitle %} Working {% endblock %}
-{% block includes %} 
 
-{% endblock %}
-{% block body %}
-{% include "form.html" %} 
+<form id="myForm" method="POST">
+    <fieldset class="form-group">
+    <div class="form-group row">
+        <label class="col-sm-1 form-control-label">vx</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='vx' placeholder="0"  >
+        </div>  
+        <label class="col-sm-1 form-control-label">vy</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='vy' placeholder="0"  >
+        </div>
+        <label class="col-sm-1 form-control-label">N</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='N' placeholder="50"  >
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-1 form-control-label">D</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='D' placeholder="0.01"  >
+        </div>
+        <label class="col-sm-1 form-control-label">t</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" step="any" name='t' placeholder="20"  >
+        </div>
+    </div>
+    </fieldset>
+    
+</form>
+
+
+<button id="btnSave">Save Click</button>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+
+
+<script>
+  
+  $(document).ready(function () {
+
+        $("#btnSave").click(
+            function () {
+                
+              var values = {};
+              $.each($('#myForm').serializeArray(), function(i, field) {
+                  values[field.name] = +field.value;
+
+              });
+
+              $.get('/get_data', values, 
+                   function(data) 
+                    { $( ".scatter_plot" ).remove();
+                      jsondata = JSON.parse(data);
+                      scatter = jsondata['scatter'];
+                      hist = jsondata['hist'];
+                      console.log(scatter);
+                      console.log(hist);
+                      drawfigure(scatter ,hist,values['t']) ;
+                    }
+                   );
+
+            }            
+        );
+    });
+
+</script>
 
 
 
@@ -41,47 +101,52 @@ body {
 }
 
 .bar {
-  opacity: 0.2;
+  opacity: 0.5;
+  color: #666666;
 }
 
 
 .bar_histy {
+  opacity: 0.5;
+}
+
+.dot {
   opacity: 0.2;
+  color: #666666;
 }
 
 </style>
 
 <script>
 
+
+
+function drawfigure(data,JSONhist,time) {
+
 var color = d3.scale.category10(),
     formatCount = d3.format(",.0f"),
     i = 1,//  set your counter to 1
     width = 750,
-    height = 750;
+    height = 750,
+    width_hist = 500 ,
+    height_hist = 200;
 
-var data = JSON.parse({{ diff|tojson }});
+
+
 
 data.forEach(function(d) {
   d.y = +d.y;
   d.x = +d.x;
 });
 
-var JSONhist = JSON.parse({{ hist|tojson }});
+// console.log('max(hist.x): ' + (d3.max(JSONhist['x'], function(d) { return (d.x); })+JSONhist['x'][1]['dx']));
+// console.log('max(hist.y): ' + d3.min(JSONhist['y'], function(d) { return (d.x); }));
+// console.log('binsize: ' + JSONhist['x'][1]['dx']);
+// console.log('max(data.x): '+ d3.max(data, function(d) { return (d.x); }));
+// console.log('max(data.y): '+ d3.min(data, function(d) { return (d.y); }));
+// define mappings
 
-
-console.log('max(hist.x): ' + (d3.max(JSONhist['x'], function(d) { return (d.x); })+JSONhist['x'][1]['dx']));
-console.log('max(hist.y): ' + d3.min(JSONhist['y'], function(d) { return (d.x); }));
-console.log('binsize: ' + JSONhist['x'][1]['dx']);
-console.log('max(data.x): '+ d3.max(data, function(d) { return (d.x); }));
-console.log('max(data.y): '+ d3.min(data, function(d) { return (d.y); }));
-
-
-
-
-
-//define mappings
-
-//mapping based on scatter data:
+// mapping based on scatter data:
 
 var x = d3.scale.linear()
     .range([0, width-250])
@@ -91,21 +156,22 @@ var y = d3.scale.linear()
     .range([height-250, 0])
     .domain(d3.extent(data, function(d) { return d.y; }));
 
-//define dimensions of the histograms
-
-var width_hist = 500 ,
-    height_hist = 200;
-
-var width_histy = 500,
-    height_histy = 200;
-
-//define mappings
+// define mappings
 
 domain_x = [0, d3.max(JSONhist['x'], function(d) { return (d.x); }) - d3.min(JSONhist['x'], function(d) { return (d.x); })]
 
-var width_mapping = d3.scale.linear()
-    .domain(domain_x)
-    .range([0, 500]);
+var width_mapping_x = d3.scale.linear()
+    .range([0, 500])
+    .domain(domain_x);
+
+
+domain_y = [0, d3.max(JSONhist['y'], function(d) { return (d.x); }) - d3.min(JSONhist['y'], function(d) { return (d.x); })]
+
+var width_mapping_y = d3.scale.linear()
+    .range([0, 500])
+    .domain(domain_y);
+
+
 
 var y_hist = d3.scale.linear()
     .domain([0, d3.max(JSONhist['x'], function(d) { return (d.y); })])
@@ -113,7 +179,7 @@ var y_hist = d3.scale.linear()
 
 var y_histy = d3.scale.linear()
     .domain([0, d3.max(JSONhist['y'], function(d) { return (d.y); })])
-    .range([height_histy, 0]);
+    .range([height_hist, 0]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -126,9 +192,10 @@ var yAxis = d3.svg.axis()
 var diffusion = d3.select("#plot").append("svg")
     .attr("width", width)
     .attr("height", height)
+    .attr("class", "scatter_plot")
   .append("g");
 
-//##define axis
+// define axis
 diffusion.append("g")
   .attr("class", "x axis noticklabel")
   .attr("transform", "translate(0," + (height-250)+ ")")
@@ -175,22 +242,19 @@ function update(data,i) {
       .attr("cy", function(d) { return y(d.y); })
 }
 
-
-
-function myLoop () {           //  create a loop function
-     setTimeout(function () {    //  call a 3s setTimeout when the loop is called
-        update(data, i);         //  your code here
-        i++;                     //  increment the counter
-        if (i <= {{time}}-1) {            //  if the counter < 10, call the loop function 
+function animate () { 
+     setTimeout(function () {     
+        if (i < time) {
+           update(data, i);
            draw_hist(x, y,i);
-           myLoop();            //  ..  again which will trigger another 
-        }                        //  ..  setTimeout()
-     }, 1)
+           animate();
+        }
+        i++;           
+     }, 10
+     )
 }
-                    //  start the loop
-myLoop()
-// update(data, {{time}}-1);
-// draw_hist(x, y, {{time}}-1);
+                  
+animate()
 
 
 function draw_hist (values_hist, values_histy,i) { 
@@ -215,21 +279,18 @@ function draw_hist (values_hist, values_histy,i) {
     bar_hist.append("rect")
         .attr("x", 0)
         .attr("y", function(d) { return height_hist - y_hist(d.y) +300; })
-        .attr("width", width_mapping(JSONhist['x'][0].dx)  )
-        .attr("height", function(d) { return y_hist(d.y*4); });
+        .attr("width", width_mapping_x(JSONhist['x'][0].dx)  )
+        .attr("height", function(d) { return y_hist(d.y*2); });
 
     bar_histy.append("rect")
         .attr("x",  function(d) { return 500 - y_histy(d.y); })
         .attr("y", 0)
-        .attr("width", function(d) { return height_histy - y_histy(d.y*4); })
-        .attr("height", width_mapping(JSONhist['x'][0].dx) );
+        .attr("width", function(d) { return height_hist - y_histy(d.y*2); })
+        .attr("height", width_mapping_x(JSONhist['x'][0].dx) );
+}
 }
 
 </script>
-
-
-
-{% endblock %}
 
 
 

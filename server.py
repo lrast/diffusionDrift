@@ -20,17 +20,6 @@ def get_tasks():
     return jsonify({'tasks': tasks})
 
 
-# @app.route('/todo/get_data', methods=['GET', 'POST'])
-# def get_data():
-
-#     #import pdb; pdb.set_trace()
-#     params = float( request.form['v'] )
-
-#     data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
-
-#     return redirect( url_for('serverTest'))  #data.to_csv()
-
-
 @app.route('/get_sim', methods=['GET', 'POST'])
 def get_sim():
     from basicSim import runSim
@@ -43,7 +32,7 @@ def get_sim():
         else:
             params[key] = float(request.form[key])
 
-    flash(params)
+    # flash(params)
     trajectory, xyhist = runSim( [ params['vx'], params['vy'] ], abs( params['D'] ), max( int( params['t'] ), 1), max( int( params['N'] ), 1) )
     
     sim_data = []
@@ -56,7 +45,41 @@ def get_sim():
     result = json.dumps([{"t": j[0], "x":j[1], "y": j[2]} for j in data])
     resulthist = json.dumps(xyhist)
 
-    return render_template("working.html", diff=result, hist = resulthist, time = int(params['t']))
+    return render_template("working.html",\
+                           diff=result,\
+                           hist = resulthist,\
+                           time = int(params['t']))
+
+
+@app.route('/get_data', methods=['GET', 'POST'])
+def get_data():
+    from basicSim import runSim
+    params = {}
+    defaults = {'vx':0, 'vy':0, 'D':0.01, 't':50, 'N':500}
+
+    for key in ['vx', 'vy', 'D', 't', 'N']:
+        if request.args.get(key) == u'':
+            params[key] = defaults[key]
+        else:
+            params[key] = float(request.args.get(key))
+
+    scatter, xyhist = runSim( [ params['vx'], params['vy'] ],\
+                                abs( params['D'] ),\
+                                max( int( params['t'] ), 1),\
+                                max( int( params['N'] ), 1) )
+    
+    scatter_list = []
+    for i in range(int(params['t'])):
+        x= [i for j in range(len(scatter[:,:,i].tolist()))]
+        scatter_list.append(zip(x,scatter[:,0,i].tolist(),scatter[:,1,i].tolist()))
+    scatter_list =  [j[0] for j in\
+                    np.asarray(scatter_list).tolist() for j[0] in j]
+
+    result = json.dumps({'scatter':[{"t": j[0], "x":j[1], "y": j[2]} for j in scatter_list],\
+                         'hist':xyhist})
+
+    return result
+
 
 @app.route('/results/more_<past_val>_hunches', methods=['GET'])
 def more_results(past_val):

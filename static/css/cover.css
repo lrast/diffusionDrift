@@ -23,6 +23,10 @@ a:hover {
 /*
  * Base structure
  */
+html {
+     overflow: -moz-scrollbars-vertical;
+     overflow: scroll;
+}
 
 html,
 body {
@@ -54,7 +58,7 @@ body {
 
 /* Padding for spacing */
 .inner {
-  padding: 30px;
+  padding: 15px 30px 0 0 ;
 }
 
 
@@ -63,8 +67,8 @@ body {
  */
 
 .masthead {
-  background-color: #222222;
-  opacity: 0.9;
+background-color: #333;
+    box-shadow: 0px -20px 70px rgba(0,0,0,1);
 }
 
 .masthead-brand {
@@ -85,20 +89,20 @@ body {
   font-size: 16px;
   font-weight: bold;
   color: #fff; /* IE8 proofing */
-  color: rgba(255,255,255,.75);
-  border-bottom: 2px solid transparent;
+  opacity: 0.9;
+  border-bottom: 4px solid transparent;
 }
 .masthead-nav > li > a:hover,
 .masthead-nav > li > a:focus {
   background-color: transparent;
-  border-bottom-color: #a9a9a9;
-  border-bottom-color: rgba(255,255,255,.25);
+  border-bottom-color: #fff;
 }
 .masthead-nav > .active > a,
 .masthead-nav > .active > a:hover,
 .masthead-nav > .active > a:focus {
   color: #fff;
   border-bottom-color: #fff;
+  opacity: 1;
 }
 
 @media (min-width: 768px) {
