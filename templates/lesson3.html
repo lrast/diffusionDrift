@@ -8,7 +8,11 @@
 $(document).ready(function(){
     $("#diffToggle").html('Variance');
 });
-
+$(document).ready(function(){
+    $("#derivbutton").click(function(){
+        $("#derivDiv").toggle();
+    });
+});
 
 </script>
 {% endblock %}
@@ -41,19 +45,44 @@ First, our intuition for diffusion and drift can be captured in terms of feature
 
 <hr>
 <p>
-In one dimension, this intuition can be written down formally as: <br>
+In one dimension, this intuition can be written down with diffusion and drift coefficients <em>v</em> and <em>D</em> as: <br>
 <img src="http://latex.codecogs.com/gif.latex?\frac{\partial p(x, t)}{\partial t}= - v \frac{\partial p(x, t)}{\partial x} + D \frac{\partial^2 p(x, t)}{\partial x^2}" border="0"/> <br>
 
-Here the first derivative in <em>x<em> corresponds to the 
+This is a <a href="http://ocw.mit.edu/courses/mathematics/18-152-introduction-to-partial-differential-equations-fall-2011/index.htm"><em>partial differential equation</em></a> because it contains derivatives of <em>p</em> with respect to multiple variables. However, we can get an idea of what it is describing by looking at the terms individually. If you are interested in a brief derivation, highlighting interesting aspects of the mathematics, see the button below.
+</p>
+<p>
+First, the left hand side:<br>
+<img src="http://latex.codecogs.com/gif.latex?\frac{\partial p(x, t)}{\partial t}"/><br>
+This term corresponds to the change in how probable it is to be at a point (<em>x</em>, <em>t</em>) over time. 
+</p>
 
+<p>
+Next,<br>
+<img src="http://latex.codecogs.com/gif.latex?- v \frac{\partial p(x, t)}{\partial x} " border="0"/> <br>
+This describes flow forward along the <em>x</em> axis at a rate <em>v</em>. Imagine a distribution is moving along the x axis over time. At each time step, the next value of <em>p</em> is just the value of <em>p</em> a step back in <em>x</em>: <br>
+<img src="http://latex.codecogs.com/gif.latex? p(t+dt, x) = p(t, x -dx) " border="0"/> <br>
+Dividing by <em>dx</em> and <em>dt</em> turns these into derivatives (also, <img src="http://latex.codecogs.com/gif.latex? \frac{\partial x}{\partial t} = v" border="0"/)> .
+</p>
 
-
+<p>
+Finally,<br>
+<img src="http://latex.codecogs.com/gif.latex? D \frac{\partial^2 p(x, t)}{\partial x^2} " border="0"/> <br>
+This is the second derivative with respect to <em>x</em>. It describe the <a href="https://en.wikipedia.org/wiki/Inflection_point"><em>concavity</em></a> of the function, which is the curvature. This is equivalent to how the function at a point x compares to the neighbors in its vicinity. Imagine a point on a curve that is higher than most of the points around it in a small interval. At this point, the curve must be mostly curving downwards. So, the concavity, and hence the second derivative is negative. This term forces points in the probability distribution, <em>p</em> to approach their neighbors, spreading it out over time.
 
 
 </p>
 
+<hr>
 
-
+<button class="btn-default toggle" id="derivbutton", href="#" >
+<strong> Derivation: </strong>
+</button>
+<div id="derivDiv" style="display:none;"> 
+In order to derive 
+</div>
+<br>
+<br>
+<br>
 
 
 {%endblock %}
