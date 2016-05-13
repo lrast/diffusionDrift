@@ -40,28 +40,80 @@ body {
   color: #FFFFFF;
 }
 
+.bar {
+  opacity: 0.2;
+}
+
+
+.bar_histy {
+  opacity: 0.2;
+}
 
 </style>
 
 <script>
 
-var data = {{ data|tojson }};
-JSONdata = JSON.parse(data)
+var color = d3.scale.category10(),
+    formatCount = d3.format(",.0f"),
+    i = 1,//  set your counter to 1
+    width = 750,
+    height = 750;
 
-var data = {{ hist|tojson }};
-JSONOhist = JSON.parse(data)
+var data = JSON.parse({{ diff|tojson }});
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 500+250 - margin.left - margin.right,
-    height = 500+250 - margin.top - margin.bottom;
+data.forEach(function(d) {
+  d.y = +d.y;
+  d.x = +d.x;
+});
+
+var JSONhist = JSON.parse({{ hist|tojson }});
+
+
+console.log('max(hist.x): ' + (d3.max(JSONhist['x'], function(d) { return (d.x); })+JSONhist['x'][1]['dx']));
+console.log('max(hist.y): ' + d3.min(JSONhist['y'], function(d) { return (d.x); }));
+console.log('binsize: ' + JSONhist['x'][1]['dx']);
+console.log('max(data.x): '+ d3.max(data, function(d) { return (d.x); }));
+console.log('max(data.y): '+ d3.min(data, function(d) { return (d.y); }));
+
+
+
+
+
+//define mappings
+
+//mapping based on scatter data:
 
 var x = d3.scale.linear()
-    .range([0, width-250]);
+    .range([0, width-250])
+    .domain(d3.extent(data, function(d) { return d.x; }));
 
 var y = d3.scale.linear()
-    .range([height-250, 0]);
+    .range([height-250, 0])
+    .domain(d3.extent(data, function(d) { return d.y; }));
 
-var color = d3.scale.category10();
+//define dimensions of the histograms
+
+var width_hist = 500 ,
+    height_hist = 200;
+
+var width_histy = 500,
+    height_histy = 200;
+
+//define mappings
+
+domain_x = [0, d3.max(JSONhist['x'], function(d) { return (d.x); }) - d3.min(JSONhist['x'], function(d) { return (d.x); })]
+
+var width_mapping = d3.scale.linear()
+    .domain(domain_x)
+    .range([0, 500]);
+
+var y_hist = d3.scale.linear()
+    .domain([0, d3.max(JSONhist['x'], function(d) { return (d.y); })])
+    .range([0, height_hist]);
+
+var y_histy = d3.scale.linear()
+    .domain([0, d3.max(JSONhist['y'], function(d) { return (d.y); })])
+    .range([height_histy, 0]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -72,156 +124,105 @@ var yAxis = d3.svg.axis()
     .orient("left");
 
 var diffusion = d3.select("#plot").append("svg")
-    .attr("width", width+ margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("width", width)
+    .attr("height", height)
+  .append("g");
 
-
-function draw(data) {
-
-  data.forEach(function(d) {
-    d.y = +d.y;
-    d.x = +d.x;
-  });
-
-  x.domain(d3.extent(data, function(d) { return d.x; })).nice();
-  y.domain(d3.extent(data, function(d) { return d.y; })).nice();
-
-
-  diffusion.append("g")
-      .attr("class", "x axis noticklabel")
-      .attr("transform", "translate(0," + (height-250)+ ")")
-      .call(xAxis)
+//##define axis
+diffusion.append("g")
+  .attr("class", "x axis noticklabel")
+  .attr("transform", "translate(0," + (height-250)+ ")")
+  .call(xAxis)
   
+diffusion.append("g")
+  .attr("class", "y axis")
+  .call(yAxis)
+  .attr("transform", "translate(" + 25+ ",0)")
+.append("text")
+  .attr("class", "label")
+  .attr("transform", "rotate(-90)")
+  .attr("y", 6)
+  .attr("x", (-height+290))
+  .attr("dy", ".71em")
+  .style("text-anchor", "end")
+  .text("y position")
 
-    diffusion.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-      .attr("transform", "translate(" + width-250 + ",0)")
-    .append("text")
-      .attr("class", "label")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("x", (-height+290))
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("y position")
+diffusion.append("g")
+  .attr("class", "x axis")
+  .call(xAxis)
+.append("text")
+  .attr("class", "label")
+  .attr("x", (width-250))
+  .attr("y", (-6))
+  .style("text-anchor", "end")
+  .text("x position");
 
-
-   diffusion.append("g")
-      .attr("class", "x axis")
-      .call(xAxis)
-      .append("text")
-      .attr("class", "label")
-      .attr("x", (width-250))
-      .attr("y", (-6))
-      .style("text-anchor", "end")
-      .text("x position");
-
-  diffusion.append("g")
-      .attr("class", "y axis noticklabel")
-      .attr("transform", "translate(" + (width-250) + ",0)")
-      .call(yAxis)
+diffusion.append("g")
+  .attr("class", "y axis noticklabel")
+  .attr("transform", "translate(" + (width-250) + ",0)")
+  .call(yAxis)
 
 
- function update(data,i) {
+function update(data,i) {
+    diffusion.selectAll(".dot").remove()
+    diffusion.selectAll(".dot")
+      .data(data)
+      .enter().append("circle")
+      .filter(function(d) { return d.t == i})
+      .attr("class", "dot")
+      .attr("r", 3.5)
+      .attr("cx", function(d) { return x(d.x); })
+      .attr("cy", function(d) { return y(d.y); })
+}
 
-  diffusion.selectAll(".dot").remove()
-  diffusion.selectAll(".dot")
-    .data(data)
-    .enter().append("circle")
-    .filter(function(d) { return d.t == i})
-    .attr("class", "dot")
-    .attr("r", 3.5)
-    .attr("cx", function(d) { return x(d.x); })
-    .attr("cy", function(d) { return y(d.y); })
-  }
-    update(data, 1);
 
-  var i = 1;                     //  set your counter to 1
 
-  function myLoop () {           //  create a loop function
+function myLoop () {           //  create a loop function
      setTimeout(function () {    //  call a 3s setTimeout when the loop is called
         update(data, i);         //  your code here
         i++;                     //  increment the counter
-        if (i < {{time}}) {            //  if the counter < 10, call the loop function
-           myLoop();
-           var x = JSONOhist['x'];
-           var y = JSONOhist['y']; 
-           draw_hist(x, y,i);            //  ..  again which will trigger another 
+        if (i <= {{time}}-1) {            //  if the counter < 10, call the loop function 
+           draw_hist(x, y,i);
+           myLoop();            //  ..  again which will trigger another 
         }                        //  ..  setTimeout()
      }, 1)
-  }
-                      //  start the loop
-  myLoop()
-
-};
-
-draw(JSONdata);
-
-</script>
-
-<script type="text/javascript">
+}
+                    //  start the loop
+myLoop()
+// update(data, {{time}}-1);
+// draw_hist(x, y, {{time}}-1);
 
 
 function draw_hist (values_hist, values_histy,i) { 
-// Generate a Bates distribution of 10 random variables.
- diffusion.selectAll(".bar").remove()
- diffusion.selectAll(".bar_histy").remove()
-// A formatter for counts.
-var formatCount = d3.format(",.0f");
 
-
-//define dimensions of the histograms
-
-var margin_hist = {top: 10, right: 30, bottom: 30, left: 30},
-    width_hist = 500 - margin_hist.left - margin_hist.right,
-    height_hist = 200 - margin_hist.top - margin_hist.bottom;
-
-var margin_histy = {top: 10, right: 30, bottom: 30, left: 30},
-    width_histy = 500 - margin_histy.left - margin_histy.right,
-    height_histy = 200 - margin_histy.top - margin_histy.bottom;
-
-//define mappings
-
-var width_mapping = d3.scale.linear()
-    .range([0, 500]);
-
-var y_hist = d3.scale.linear()
-    .domain([0, d3.max(values_hist, function(d) { return (d.y); })])
-    .range([0, height_hist]);
-
-var y_histy = d3.scale.linear()
-    .domain([0, d3.max(values_histy, function(d) { return (d.y); })])
-    .range([height_histy, 0]);
-
-var bar_hist = diffusion.selectAll(".bar")
-    .data(values_hist)
+    diffusion.selectAll(".bar").remove()
+    diffusion.selectAll(".bar_histy").remove()
+    // A formatter for counts.
+    var bar_hist = diffusion.selectAll(".bar")
+    .data(JSONhist['x'])
     .enter().append("g")
     .attr("class", "bar")
     .filter(function(d) { return d.t == i})
     .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y_hist(d.y) + ")"; });
 
-var bar_histy = diffusion.selectAll(".bar_histy")
-    .data(values_histy)
-  .enter().append("g")
+    var bar_histy = diffusion.selectAll(".bar_histy")
+    .data(JSONhist['y'])
+    .enter().append("g")
     .attr("class", "bar_histy")
     .filter(function(d) { return d.t == i})
-    .attr("transform", function(d) { return "translate(" + y_histy(d.y) + "," + x(-1*d.x) + ")"; }); //changed d.x to-1
+    .attr("transform", function(d) { return "translate(" + y_histy(d.y) + "," + y(d.x+d.dx) + ")"; });
 
-bar_hist.append("rect")
-    .attr("x", 0)
-    .attr("y", function(d) { return height_hist - y_hist(d.y) +290; })
-    .attr("width", width_mapping(values_hist[0].dx)  )
-    .attr("height", function(d) { return y_hist(d.y)*4; });
+    bar_hist.append("rect")
+        .attr("x", 0)
+        .attr("y", function(d) { return height_hist - y_hist(d.y) +300; })
+        .attr("width", width_mapping(JSONhist['x'][0].dx)  )
+        .attr("height", function(d) { return y_hist(d.y*4); });
 
-bar_histy.append("rect")
-    .attr("x",  function(d) { return width_histy - y_histy(d.y); })
-    .attr("y", 250)
-    .attr("width", function(d) { return height_histy - y_histy(d.y); })
-    .attr("height", width_mapping(values_histy[0].dx) );
-
+    bar_histy.append("rect")
+        .attr("x",  function(d) { return 500 - y_histy(d.y); })
+        .attr("y", 0)
+        .attr("width", function(d) { return height_histy - y_histy(d.y*4); })
+        .attr("height", width_mapping(JSONhist['x'][0].dx) );
 }
 
 </script>
