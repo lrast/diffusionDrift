@@ -1,0 +1,4 @@
+virtualenv/*
+.ipynb_checkpoints/*
+*.ipynb
+*.pyc
