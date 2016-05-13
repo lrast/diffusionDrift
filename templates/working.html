@@ -1,54 +1,44 @@
 <style>
 
 #btnSave {
-  padding-left: 30;\
+  padding-left: 30;
   margin-left: 30;
 }
 
+.inputsim {
+      background-color: transparent;
+    border: 0;
+    width: 50px;
+    font-size: 15pt;
+}
+
+.row {
+    margin-right: 15px;
+    margin-left: 30px;
+  }
+
+.row {
+    margin-right: 15px;
+    margin-left: 30px;
+  }
+
+.form-control-label{
+  margin-right: 10px;
+  font-size: 15pt;
+}
 </style>
-    <fieldset class="form-group">
-    <div class="form-group row">
-        <label class="col-sm-1 form-control-label">vx</label>
-        <div class="col-sm-2">
-            <input class="form-control" value = "0" type="number" step="any" name='vx' placeholder="0"  >
-        </div>  
-        <label class="col-sm-1 form-control-label">vy</label>
-        <div class="col-sm-2">
-            <input class="form-control" value = "0" type="number" step="any" name='vy' placeholder="0"  >
-        </div>
-        <label class="col-sm-1 form-control-label">N</label>
-        <div class="col-sm-2">
-            <input class="form-control" value = "50" type="number" step="any" name='N' placeholder="50"  >
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-1 form-control-label">D</label>
-        <div class="col-sm-2">
-            <input class="form-control" value = "0.1" type="number" step="any" name='D' placeholder="0.01"  >
-        </div>
-        <label class="col-sm-1 form-control-label">t</label>
-        <div class="col-sm-2">
-            <input class="form-control" value = "20" type="number" step="any" name='t' placeholder="20"  >
-        </div>
-       <label class="col-sm-1 form-control-label"></label>
-       <div class="col-sm-2">
-            <button id="btnSave" class="btn btn-warning col-sm-12">Start</button> 
-       </div>
-
-    </div>
-    </fieldset>
-     
-
-
-<br>
-
-Where vx and vy are the components of the drift velocity, D is the strength of the diffusion coefficient, N is the number of particles, and t is the number of timesteps.
-<script src="//d3js.org/d3.v3.min.js"></script>
-
 
 <script>
+
   
+
   $(document).ready(function () {
+
+       d3.select('#tparticles').call(d3.slider().axis(d3.svg.axis().orient("top").ticks(4)).min(0).max(20).step(1).on("slide", function(evt5, value) {
+      $('.form-group input[name="t"]').val(value)
+
+    }));
+  
 
         $("#btnSave").click(
             function () {
@@ -77,14 +67,30 @@ Where vx and vy are the components of the drift velocity, D is the strength of t
 
 </script>
 
+<div>
 
+  <fieldset class="form-group">
+
+    <div class="row">
+        <label class="form-control-label">t = <input class='inputsim' value = "30" type="number" step="any" name='t' placeholder="20"  ></label>
+        <label class="form-control-label">N = <input class='inputsim' value = "300" type="number" step="any" name='N' placeholder="20"  > </label>
+        <label class="form-control-label">vx = <input class='inputsim' value = "0" type="number" step="any" name='vx' placeholder="20"  ></label>
+        <label class="form-control-label">vy = <input class='inputsim' value = "0" type="number" step="any" name='vy' placeholder="20"  ></label>
+        <label class="form-control-label">D = <input class='inputsim' value = "1" type="number" step="any" name='D' placeholder="20"  ></label>
+        <button id="btnSave" class="btn btn-primary btn-sm">Start Simulation</button>
+    </div>  
+    </fieldset>
+
+</div>
 
 <div id="plot"></div>
-<div id="histogramx"></div>
+</div>
 
-<div id="histogramy"></div>
+<br>
 
+Where vx and vy are the components of the drift velocity, D is the strength of the diffusion coefficient, N is the number of particles, and t is the number of timesteps.
 <script src="//d3js.org/d3.v3.min.js"></script>
+<script src="{{ url_for('static', filename='js/d3.slider.js') }}"></script>
 
 <style>
 
@@ -137,11 +143,12 @@ function drawfigure(data,JSONhist,time) {
 var color = d3.scale.category10(),
     formatCount = d3.format(",.0f"),
     i = 1,//  set your counter to 1
-    margin = 50
-    width = 800 - margin,
-    height = 800 - margin,
-    width_hist = 500 ,
-    height_hist = 200;
+    margin = 30
+    width = 650 - margin,
+    height = 650 - margin,
+    width_hist = width ,
+    height_hist = 200,
+    border = 150;
 
 
 
@@ -161,11 +168,11 @@ data.forEach(function(d) {
 // mapping based on scatter data:
 
 var x = d3.scale.linear()
-    .range([0, width-250])
+    .range([0, width-border])
     .domain(d3.extent(data, function(d) { return d.x; }));
 
 var y = d3.scale.linear()
-    .range([height-250, 0])
+    .range([height-border, 0])
     .domain(d3.extent(data, function(d) { return d.y; }));
 
 // define mappings
@@ -202,16 +209,16 @@ var yAxis = d3.svg.axis()
     .orient("left");
 
 var diffusion = d3.select("#plot").append("svg")
-    .attr("width", width+ margin)
-    .attr("height", height + margin)
+    .attr("width", width)
+    .attr("height", height)
     .attr("class", 'scatter_plot')
     .append("g")
-    .attr("transform", "translate(" + margin/2.0 + "," + margin/2.0 + ")");
+    .attr("transform", "translate(" + margin + "," + margin + ")");
 
 // define axis
 diffusion.append("g")
   .attr("class", "x axis noticklabel")
-  .attr("transform", "translate(0," + (height-250)+ ")")
+  .attr("transform", "translate(0," + (height-border)+ ")")
   .call(xAxis)
 
   
@@ -223,7 +230,7 @@ diffusion.append("g")
   .attr("class", "label")
   .attr("transform", "rotate(-90)")
   .attr("y", 6)
-  .attr("x", (-height+290))
+  .attr("x", (-height+border + 40))
   .attr("dy", ".71em")
   .style("text-anchor", "end")
   .text("y position")
@@ -235,7 +242,7 @@ diffusion.append("g")
   .call(xAxis)
 .append("text")
   .attr("class", "label")
-  .attr("x", (width-250-10))
+  .attr("x", (width-border-10))
   .attr("y", 10)
   .style("text-anchor", "end")
   .text("x position")
@@ -243,7 +250,7 @@ diffusion.append("g")
 
 diffusion.append("g")
   .attr("class", "y axis correcty noticklabel")
-  .attr("transform", "translate(" + (width-250) + ",0)")
+  .attr("transform", "translate(" + (width-border) + ",0)")
   .call(yAxis)
 
 
@@ -282,7 +289,7 @@ function animate () {
            animate();
         }
         i++;           
-     }, 10
+     }, 500
      )
 }
                   
@@ -310,19 +317,27 @@ function draw_hist (values_hist, values_histy,i) {
 
     bar_hist.append("rect")
         .attr("x", 0)
-        .attr("y", function(d) { return height_hist - y_hist(d.y) +300; })
+        .attr("y", function(d) { return height_hist - y_hist(d.y) +270; })
         .attr("width", width_mapping_x(JSONhist['x'][0].dx)  )
         .attr("height", function(d) { return y_hist(d.y*2); });
 
     bar_histy.append("rect")
-        .attr("x",  function(d) { return 500 - y_histy(d.y); })
+        .attr("x",  function(d) { return 470 - y_histy(d.y); })
         .attr("y", 0)
         .attr("width", function(d) { return height_hist - y_histy(d.y*2); })
         .attr("height", width_mapping_x(JSONhist['x'][0].dx) );
 }
 }
 
+
+
+
 </script>
+
+
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="static/js/d3.slider.js"></script>
 
 
 

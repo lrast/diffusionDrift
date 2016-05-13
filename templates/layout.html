@@ -4,10 +4,14 @@
     <title> Diffusion Drift {% block subtitle %} {% endblock %}</title>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/d3.slider.css') }}">
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
      <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/cover.css') }}">
+      <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/d3.slider.js') }}"></script>
+    
     {% block includes %} {% endblock %}
 </head>
 
@@ -73,6 +77,11 @@
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="//d3js.org/d3.v3.min.js"></script>
+
+    <script type="text/javascript">
+         d3.select('#slider3').call(d3.slider().on("slide", function(evt, value) {
+      d3.select('#slider3text').text(value);
+    }));
+    </script>
   </body>
 </html>
