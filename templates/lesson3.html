@@ -29,18 +29,24 @@ First, our intuition for diffusion and drift can be captured in terms of feature
 </p>
 
 <div>
-<form action="{{ url_for('get_sim') }}" method="GET">
+<form action="{{ url_for('get_toy') }}" method="GET">
     <fieldset class="form-group">
         <input class='sim' type=Submit name='action' value="Run">
     </fieldset>
 </form>
 
 
-
  </div>
+
 
 <hr>
 <p>
+In one dimension, this intuition can be written down formally as: <br>
+<img src="http://latex.codecogs.com/gif.latex?\frac{\partial p(x, t)}{\partial t}= - v \frac{\partial p(x, t)}{\partial x} + D \frac{\partial^2 p(x, t)}{\partial x^2}" border="0"/> <br>
+
+Here the first derivative in <em>x<em> corresponds to the 
+
+
 
 
 

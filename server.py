@@ -64,6 +64,18 @@ def more_results(past_val):
     data = pd.DataFrame.from_csv('static/data/data.tsv', sep='\t')
     return data.to_csv()
 
+
+
+
+
+@app.route('/get_toy', methods="GET")
+def get_toy():
+    #gets toy model data
+    pass
+
+
+
+
 @app.route('/')
 def home():
     #home page
