@@ -35,7 +35,7 @@ def get_tasks():
 def get_sim():
     from basicSim import runSim
     params = {}
-    defaults = {'vx':0, 'vy':0, 'D':0.01, 't':100, 'N':50}
+    defaults = {'vx':0, 'vy':1, 'D':0.01, 't':10, 'N':3}
     for key in ['vx', 'vy', 'D', 't', 'N']:
         if request.form[key] == u'':
             params[key] = defaults[key]
@@ -55,7 +55,7 @@ def get_sim():
     result = json.dumps([{"t": j[0], "x":j[1], "y": j[2]} for j in data])
     resulthist = json.dumps(xyhist)
 
-    return render_template("working.html", data=result, time = int(params['t']))
+    return render_template("working.html", data=result, hist = resulthist, time = int(params['t']))
 
 @app.route('/results/more_<past_val>_hunches', methods=['GET'])
 def more_results(past_val):

@@ -46,7 +46,10 @@ body {
 <script>
 
 var data = {{ data|tojson }};
-JSONObject = JSON.parse(data)
+JSONdata = JSON.parse(data)
+
+var data = {{ hist|tojson }};
+JSONOhist = JSON.parse(data)
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 500+250 - margin.left - margin.right,
@@ -143,7 +146,10 @@ function draw(data) {
         update(data, i);         //  your code here
         i++;                     //  increment the counter
         if (i < {{time}}) {            //  if the counter < 10, call the loop function
-           myLoop();             //  ..  again which will trigger another 
+           myLoop();
+           var x = JSONOhist['x'];
+           var y = JSONOhist['y']; 
+           draw_hist(x, y,i);            //  ..  again which will trigger another 
         }                        //  ..  setTimeout()
      }, 1)
   }
@@ -152,124 +158,71 @@ function draw(data) {
 
 };
 
-draw(JSONObject);
+draw(JSONdata);
 
 </script>
 
 <script type="text/javascript">
-  
 
+
+function draw_hist (values_hist, values_histy,i) { 
 // Generate a Bates distribution of 10 random variables.
-var values_hist = d3.range(1000).map(d3.random.bates(10));
-
+ diffusion.selectAll(".bar").remove()
+ diffusion.selectAll(".bar_histy").remove()
 // A formatter for counts.
 var formatCount = d3.format(",.0f");
+
+
+//define dimensions of the histograms
 
 var margin_hist = {top: 10, right: 30, bottom: 30, left: 30},
     width_hist = 500 - margin_hist.left - margin_hist.right,
     height_hist = 200 - margin_hist.top - margin_hist.bottom;
 
-var x_hist = d3.scale.linear()
-    .domain([0, 1])
-    .range([0, width_hist]);
-
-// Generate a histogram using twenty uniformly-spaced bins.
-var data_hist = d3.layout.histogram()
-    .bins(x_hist.ticks(20))
-    (values_hist);
-
-var y_hist = d3.scale.linear()
-    .domain([0, d3.max(data_hist, function(d) { return d.y; })])
-    .range([height_hist, 0]);
-
-var xAxis_hist = d3.svg.axis()
-    .scale(x_hist)
-    .orient("bottom");
-
-var bar_hist = diffusion.selectAll(".bar")
-    .data(data_hist)
-  .enter().append("g")
-    .attr("class", "bar")
-    .attr("transform", function(d) { return "translate(" + x_hist(d.x) + "," + y_hist(d.y) + ")"; });
-
-bar_hist.append("rect")
-    .attr("x", 1)
-    .attr("y", function(d) { return height_hist - y_hist(d.y) +290; })
-    .attr("width", x_hist(data_hist[0].dx) - 1)
-    .attr("height", function(d) { return height_hist - y_hist(d.y); });
-
-// bar_hist.append("text")
-//     .attr("dy", ".75em")
-//     .attr("class", "histlabels")
-//     .attr("y", function(d) { return height_hist - y_hist(d.y)+20; })
-//     .attr("x", x_hist(data_hist[0].dx) / 2)
-//     .attr("text-anchor", "middle")
-//     .text(function(d) { return formatCount(d.y); });
-
-svg_hist.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height_hist + ")")
-    .call(xAxis_hist);
-
-
-</script>
-
-<script type="text/javascript">
-  
-
-// Generate a Bates distribution of 10 random variables.
-var values_histy = d3.range(1000).map(d3.random.bates(10));
-
-// A formatter for counts.
-var formatCount = d3.format(",.0f");
-
 var margin_histy = {top: 10, right: 30, bottom: 30, left: 30},
     width_histy = 500 - margin_histy.left - margin_histy.right,
     height_histy = 200 - margin_histy.top - margin_histy.bottom;
 
-var x_histy = d3.scale.linear()
-    .domain([0, 1])
-    .range([0, width_histy]);
+//define mappings
 
-// Generate a histogram using twenty uniformly-spaced bins.
-var data_histy = d3.layout.histogram()
-    .bins(x_histy.ticks(20))
-    (values_histy);
+var width_mapping = d3.scale.linear()
+    .range([0, 500]);
+
+var y_hist = d3.scale.linear()
+    .domain([0, d3.max(values_hist, function(d) { return (d.y); })])
+    .range([0, height_hist]);
 
 var y_histy = d3.scale.linear()
-    .domain([0, d3.max(data_histy, function(d) { return d.y; })])
+    .domain([0, d3.max(values_histy, function(d) { return (d.y); })])
     .range([height_histy, 0]);
 
-var xAxis_histy = d3.svg.axis()
-    .scale(x_histy)
-    .orient("bottom");
+var bar_hist = diffusion.selectAll(".bar")
+    .data(values_hist)
+    .enter().append("g")
+    .attr("class", "bar")
+    .filter(function(d) { return d.t == i})
+    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y_hist(d.y) + ")"; });
 
 var bar_histy = diffusion.selectAll(".bar_histy")
-    .data(data_histy)
+    .data(values_histy)
   .enter().append("g")
     .attr("class", "bar_histy")
-    .attr("transform", function(d) { return "translate(" + y_histy(d.y) + "," + x_histy(d.x) + ")"; });
+    .filter(function(d) { return d.t == i})
+    .attr("transform", function(d) { return "translate(" + y_histy(d.y) + "," + x(-1*d.x) + ")"; }); //changed d.x to-1
+
+bar_hist.append("rect")
+    .attr("x", 0)
+    .attr("y", function(d) { return height_hist - y_hist(d.y) +290; })
+    .attr("width", width_mapping(values_hist[0].dx)  )
+    .attr("height", function(d) { return y_hist(d.y)*4; });
 
 bar_histy.append("rect")
     .attr("x",  function(d) { return width_histy - y_histy(d.y); })
-    .attr("y", 1)
+    .attr("y", 250)
     .attr("width", function(d) { return height_histy - y_histy(d.y); })
-    .attr("height", x_histy(data_histy[0].dx) - 1)
-    ;
+    .attr("height", width_mapping(values_histy[0].dx) );
 
-// bar_histy.append("text")
-//     .attr("dy", ".75em")
-//     .attr("class", "histlabels")
-//     .attr("y", function(d) { return height_histy - y_histy(d.y)+20; })
-//     .attr("x", x_histy(data_histy[0].dx) / 2)
-//     .attr("text-anchor", "middle")
-//     .text(function(d) { return formatCount(d.y); });
-
-svg_histy.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height_histy + ")")
-    .call(xAxis_histy);
-
+}
 
 </script>
 
