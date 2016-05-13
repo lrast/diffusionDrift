@@ -18,7 +18,7 @@
         </div>
         <label class="col-sm-1 form-control-label">N</label>
         <div class="col-sm-2">
-            <input class="form-control" value = "500" type="number" step="any" name='N' placeholder="50"  >
+            <input class="form-control" value = "50" type="number" step="any" name='N' placeholder="50"  >
         </div>
     </div>
     <div class="form-group row">
@@ -49,23 +49,6 @@ Where vx and vy are the components of the drift velocity, D is the strength of t
 <script>
   
   $(document).ready(function () {
-    var values = {};
-              $.each($('.form-group').serializeArray(), function(i, field) {
-                  values[field.name] = +field.value;
-
-              });
-
-              $.get('/get_data', values, 
-                   function(data) 
-                    { $( ".scatter_plot" ).remove();
-                      jsondata = JSON.parse(data);
-                      scatter = jsondata['scatter'];
-                      hist = jsondata['hist'];
-                      console.log(scatter);
-                      console.log(hist);
-                      drawfigure(scatter ,hist,2) ;
-                    }
-                   );
 
         $("#btnSave").click(
             function () {
@@ -221,6 +204,7 @@ var yAxis = d3.svg.axis()
 var diffusion = d3.select("#plot").append("svg")
     .attr("width", width+ margin)
     .attr("height", height + margin)
+    .attr("class", 'scatter_plot')
     .append("g")
     .attr("transform", "translate(" + margin/2.0 + "," + margin/2.0 + ")");
 
@@ -229,6 +213,7 @@ diffusion.append("g")
   .attr("class", "x axis noticklabel")
   .attr("transform", "translate(0," + (height-250)+ ")")
   .call(xAxis)
+
   
 diffusion.append("g")
   .attr("class", "y axis")
@@ -243,20 +228,38 @@ diffusion.append("g")
   .style("text-anchor", "end")
   .text("y position")
 
+
+
 diffusion.append("g")
-  .attr("class", "x axis")
+  .attr("class", "x axis correctx")
   .call(xAxis)
 .append("text")
   .attr("class", "label")
-  .attr("x", (width-250))
-  .attr("y", (-6))
+  .attr("x", (width-250-10))
+  .attr("y", 10)
   .style("text-anchor", "end")
-  .text("x position");
+  .text("x position")
+
 
 diffusion.append("g")
-  .attr("class", "y axis noticklabel")
+  .attr("class", "y axis correcty noticklabel")
   .attr("transform", "translate(" + (width-250) + ",0)")
   .call(yAxis)
+
+
+diffusion.selectAll("g correctx .tick text")
+  .attr("transform", "translate(0,-6)")
+
+diffusion.selectAll(".correctx .tick line")
+  .attr("transform", "translate(0,-6)")
+
+diffusion.selectAll(".correctx .tick text")
+  .attr("transform", "translate(0,-26)")
+
+diffusion.selectAll(".correcty .tick line")
+  .attr("transform", "translate(6 ,0)")
+
+
 
 
 function update(data,i) {
