@@ -1,13 +1,75 @@
 {% extends "layout.html" %}
 {% block subtitle %} Lesson 5 {% endblock %}
+
+{% block includes %} 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+
+$(document).ready(function(){
+    $("#mutbutton").click(function(){
+        $("#mutDiv").toggle();
+    });
+    $("#selbutton").click(function(){
+        $("#selDiv").toggle();
+    });
+    $("#GDbutton").click(function(){
+        $("#GDDiv").toggle();
+    });
+});
+
+
+</script>
+
+{% endblock %}
+
 {% block body %}
-Lorem ipsum dolor sit amet, eu mucius temporibus sit. Quem feugiat ei quo, eum ad nostrud adversarium. Putant ponderum mei ex, prompta splendide inciderint mei et, ad per audiam latine singulis. Has eu diceret signiferumque, usu aliquid impedit hendrerit id, eos et vidit lorem saepe. Duis denique delicatissimi qui no, audiam labores commune ut ius. Te solum veniam albucius quo, unum dolores neglegentur eos ex. Vix illum aliquip instructior ea, te paulo euripidis quo.
 
-Amet electram his ea. Vis rebum quidam postulant et, tritani accumsan has et, ea dolores molestie comprehensam his. Adhuc dicta an his, cum ridens dolorum efficiendi et. At quo quem volutpat philosophia, ei malis audiam quo. Pri labore delenit euripidis ei, fabulas accusata suavitate pro ut. Duis civibus definitionem in has, congue sadipscing ea vis.
 
-Pri blandit percipit gloriatur at, qui utroque sensibus mediocritatem te, congue conclusionemque eos ut. Enim laudem admodum est cu, pri affert altera te, ius te commodo insolens voluptaria. Ea fuisset adipiscing sed, ea eruditi pertinax expetendis per. Iuvaret molestiae theophrastus te vel, sit dicam feugiat expetenda ex. Ei bonorum recusabo abhorreant has, duo eirmod aeterno tincidunt ei. Pro in noster abhorreant, has sint doctus ne, nam autem impedit at.
 
-Dicta detraxit nec in, at cum atqui ignota, cu clita aliquip euismod vis. An usu tempor rationibus vituperata. Et legere everti adversarium vis, et nec eius patrioque. Sed ea aliquam fierent adipiscing, ne ullum dolores per.
+<h1> Mutation, Selection, and Genetic Drift</h1>
+<hr>
+There are three major factors that influence the evolution of a population. These are: mutation, selection, and genetic drift (not related to the drift that we've been talking about). In this section, we will explore the effects of each of these factors on an evolving population.
+<hr>
+<h3> Mutation</h3>
+<button class="btn-default toggle" id="mutbutton", href="#" >
+<strong> Definition: </strong>
+</button>
+<div id="mutDiv" style="display:none;"> Mutation (?ref) is the introduction of random errors into an organism's genome. Because they are random, many of the errors may not have an effect on the exact phenotype that we are interested in. The effective mutation rate can be modeled as the base rate times the probability of getting a mutation in genes that we are interested in, but, in general, mapping between genotype and phenotype (?ref ) is <em> very </em> difficult to model.
+</div> 
 
-Vivendo delicata sed ea, te diceret mediocritatem per. Te cum insolens rationibus, ex mea eruditi voluptaria. Pri te clita graeco vocibus, sea cu mazim delectus. Illud sonet intellegat ex eos, an labores laoreet efficiantur sit. Eam in etiam postulant, cum alii delicata ei, nec cu possit platonem mandamus.
+
+<p>   </p>
+
+
+
+<hr>
+<h3> Selection </h3>
+<button class="btn-default toggle" id="selbutton", href="#" >
+<strong> Definition: </strong>
+</button>
+<div id="selDiv" style="display:none;"> 
+Selection (?ref) is the what most people think of when they think of evolution. It is the result of competition among members of the population (for example, for a finite amount of resources), which enriches for the <em> fittest </em> members of the population. Here, fitness is a function of the phenotype of the organism, that is to say, whatever feature of the organism interacts with the environment.
+</div> 
+
+
+
+
+<hr>
+<h3> Genetic Drift </h3>
+<button class="btn-default toggle" id="GDbutton", href="#" >
+<strong> Definition: </strong>
+</button>
+<div id="GDDiv" style="display:none;"> 
+Genetic drift is unfortunately named, since it doesn't have much to do with drift in the sense that we have been discussing. Genetic drift happens due to random fluctuations in which members of a population are able to reproduce. If not ever member of a population is able to reproduce, than 
+
+</div> 
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
 {%endblock %}

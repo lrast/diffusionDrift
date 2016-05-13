@@ -23,8 +23,7 @@ def makeHists(positions, xyind):
     delta = (histmax - histmin) / 21
     bins = np.linspace(histmin, histmax, 21)  # we want 20 bins total
 
-    # one dictionary per time point
-
+    # one dictionary per bar per time point
 
     fullList = []
     for timepoint in range(positions.shape[2]):
