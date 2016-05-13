@@ -80,9 +80,10 @@ This is the second derivative with respect to <em>x</em>. It describe the <a hre
 <div id="derivDiv" style="display:none;"> 
 <p>
 At this point, you may be wondering how we got from the <a href="https://en.wikipedia.org/wiki/Moment_(mathematics)"><em>moments</em></a> of the distribution (namely the mean and variance) to the derivatives of the probability function. After all, the change in the first moment (mean) is the coefficient for the first derivative term, and the change in the second moment (variance) is the coefficient for the second derivative term. The answer is that these terms come from a Taylor expansion. If we model changes in the probability distribution due to rates of flow in and out of a given point: <br>
-<img src="http://latex.codecogs.com/gif.latex? \frac{\partial p(x, t)}{\partial t} = \int " border="0"/> (net flow into <em>x</em> from <em>y</em>) <img src="http://latex.codecogs.com/gif.latex? p(x,t) = \int " border="0"/>
-
+<img src="http://latex.codecogs.com/gif.latex? \frac{\partial p(x, t)}{\partial t} = \int dy " border="0"/> (net flow into <em>x</em> from <em>y</em>) <img src="http://latex.codecogs.com/gif.latex? p(x,t) = \int dy y \frac{\partial}{\partial x} p(x,t) " border="0"/> (net flow into <em>x</em> from <em>y</em>) + <img src="http://latex.codecogs.com/gif.latex?y \frac{\partial^2}{\partial x^2} p(x,y) " border="0"/> (net flow into <em>x</em> from <em>y</em>) + ...
 <br>
+<img src="http://latex.codecogs.com/gif.latex? = \frac{\partial}{\partial x} p(x,t) \int dy " border="0"/>
+(net flow into <em>x</em> from <em>y</em>)
 
 
 </p>
