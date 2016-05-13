@@ -48,7 +48,7 @@ First, our intuition for diffusion and drift can be captured in terms of feature
 In one dimension, this intuition can be written down with diffusion and drift coefficients <em>v</em> and <em>D</em> as: <br>
 <img src="http://latex.codecogs.com/gif.latex?\frac{\partial p(x, t)}{\partial t}= - v \frac{\partial p(x, t)}{\partial x} + D \frac{\partial^2 p(x, t)}{\partial x^2}" border="0"/> <br>
 
-This is a <a href="http://ocw.mit.edu/courses/mathematics/18-152-introduction-to-partial-differential-equations-fall-2011/index.htm"><em>partial differential equation</em></a> because it contains derivatives of <em>p</em> with respect to multiple variables. However, we can get an idea of what it is describing by looking at the terms individually. If you are interested in a brief derivation, highlighting interesting aspects of the mathematics, see the button below.
+This is a <a href="http://ocw.mit.edu/courses/mathematics/18-152-introduction-to-partial-differential-equations-fall-2011/index.htm"><em>partial differential equation</em></a> because it contains derivatives of <em>p</em> with respect to multiple variables. However, we can get an idea of what it is describing by looking at the terms individually. We won't give a full derivation, but we highlight some interesting aspects of the mathematics, see the button below.
 </p>
 <p>
 First, the left hand side:<br>
@@ -61,7 +61,7 @@ Next,<br>
 <img src="http://latex.codecogs.com/gif.latex?- v \frac{\partial p(x, t)}{\partial x} " border="0"/> <br>
 This describes flow forward along the <em>x</em> axis at a rate <em>v</em>. Imagine a distribution is moving along the x axis over time. At each time step, the next value of <em>p</em> is just the value of <em>p</em> a step back in <em>x</em>: <br>
 <img src="http://latex.codecogs.com/gif.latex? p(t+dt, x) = p(t, x -dx) " border="0"/> <br>
-Dividing by <em>dx</em> and <em>dt</em> turns these into derivatives (also, <img src="http://latex.codecogs.com/gif.latex? \frac{\partial x}{\partial t} = v" border="0"/)> .
+Dividing by <em>dx</em> and <em>dt</em> turns these into derivatives (also, <img src="http://latex.codecogs.com/gif.latex? \frac{\partial x}{\partial t} = v" border="0"/> ).
 </p>
 
 <p>
@@ -75,14 +75,30 @@ This is the second derivative with respect to <em>x</em>. It describe the <a hre
 <hr>
 
 <button class="btn-default toggle" id="derivbutton", href="#" >
-<strong> Derivation: </strong>
+<strong> More: </strong>
 </button>
 <div id="derivDiv" style="display:none;"> 
-In order to derive 
-</div>
-<br>
-<br>
+<p>
+At this point, you may be wondering how we got from the <a href="https://en.wikipedia.org/wiki/Moment_(mathematics)"><em>moments</em></a> of the distribution (namely the mean and variance) to the derivatives of the probability function. After all, the change in the first moment (mean) is the coefficient for the first derivative term, and the change in the second moment (variance) is the coefficient for the second derivative term. The answer is that these terms come from a Taylor expansion. If we model changes in the probability distribution due to rates of flow in and out of a given point: <br>
+<img src="http://latex.codecogs.com/gif.latex? \frac{\partial p(x, t)}{\partial t} = \int " border="0"/> (net flow into <em>x</em> from <em>y</em>) <img src="http://latex.codecogs.com/gif.latex? p(x,t) = \int " border="0"/>
+
 <br>
 
+
+</p>
+<p>
+For more information, check out this the nice derivation in <a href="http://ocw.mit.edu/courses/physics/8-592j-statistical-physics-in-biology-spring-2011/index.htm"><em>this course.</em></a>
+</p>
+<p>
+There is also a general correspondence between terms in a moment expansion and terms in a Taylor expansion. This is captured by the <a href="https://en.wikipedia.org/wiki/Moment-generating_function"> <em>moment generating function</em></a> of a probability distribution. The moment generating function is an <a href="https://en.wikipedia.org/wiki/Integral_transform"><em>integral transformation</em></a> (much like the one above) of the probability density function (pdf). Where it exists, it has the property that its nth derivative at zero (the nth coefficient in it's Maclaurin series) is the nth moment of distribution. So, the <a href="https://en.wikipedia.org/wiki/Laplace_transform"><em>transformation</em></a> provides a correspondence between Taylor expansions and moment expansions. It is interesting to note that the moment generating function does not always exist. One distribution without a moment generating function is the <a href="https://en.wikipedia.org/wiki/Cauchy_distribution"><em>Cauchy distribution</em></a>.
+</p>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 {%endblock %}
