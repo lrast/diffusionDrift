@@ -1,4 +1,6 @@
+.DS_Store
 virtualenv/*
 .ipynb_checkpoints/*
 *.ipynb
 *.pyc
+*/.DS_Store

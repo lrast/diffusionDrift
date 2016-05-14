@@ -7,10 +7,9 @@
 
 $(document).ready(function(){
     $("#diffToggle").html('Variance');
-});
-$(document).ready(function(){
     $("#derivbutton").click(function(){
         $("#derivDiv").toggle();
+    $('.wikihover').wiki_tooltip({wiki_lang : 'en'}); 
     });
 });
 
@@ -29,7 +28,7 @@ In the last section, we showed how systems that evolve over time can be describe
 <hr>
 
 <p> 
-First, our intuition for diffusion and drift can be captured in terms of features of the probability distribution. Diffusion spreads the distribution out, so it should scale with the rate of change of the <a href="https://en.wikipedia.org/wiki/Variance"><em>variance</em></a> or <a href="https://en.wikipedia.org/wiki/Standard_deviation"><em>standard deviation</em></a> of the distribution. Drift moves the whole distribution, so it should correspond to changes in the average or <a href="https://en.wikipedia.org/wiki/Expected_value"><em>mean</em></a> of the distribution.
+First, our intuition for diffusion and drift can be captured in terms of features of the probability distribution. Diffusion spreads the distribution out, so it should scale with the rate of change of the <abbr class="wikihover" rel="variance" >variance</abbr> or standard deviation of the distribution. Drift moves the whole distribution, so it should correspond to changes in the average or <abbr class="wikihover" rel="expected value" >mean</abbr> of the distribution.
 </p>
 
 
@@ -61,6 +60,21 @@ This is the second derivative with respect to <em>x</em>. It describe the <a hre
 
 
 </p>
+<hr>
+<p>
+Numerically solving this equation in mathematica (using a normal distribution as an initial condition) with <em> v = D = 1</em> gives:
+    <div>
+    <img src="{{ url_for('static', filename='numericalSols.png') }}" alt="numerical solutions" width='80%' style="{
+    display: block;
+    margin: 0 auto;
+}">
+    </div>
+Notice that similarly to the simulated trajectories, the equations capture the tendency of the distribution to both spread out and move foreward as time passes
+
+
+</p>
+
+
 
 <hr>
 
@@ -96,7 +110,6 @@ There is also a general correspondence between terms in a moment expansion and t
 </p>
 </div>
 
-<br>
 <br>
 <br>
 <br>
