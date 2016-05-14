@@ -25,25 +25,6 @@ $(document).ready(function(){
 {% block body %}
 
 <h1> Genetic Drift, Mutation, Selection</h1>
-<hr>
-
-There are three major factors that influence the evolution of a population. These are: mutation, selection, and genetic drift. In this section, we will explore the effects of each of these factors on an evolving population.
-
-<h3> Mutation</h3>
-
-<div id="mutDiv"> <abbr class="wikihover" rel="mutation">Mutation</abbr> is the introduction of random errors into an organism's genome. Because they are random, many of the errors may not have an effect on the exact phenotype that we are interested in. The effective mutation rate can be modeled as the base rate times the probability of getting a mutation in genes that we are interested in, but, in general, mapping between <abbr class="wikihover" rel="Genotype-phenotype distinction"> genotype and phenotype</abbr> is <em> very </em> difficult to model.
-</div> 
-
-<h3> Selection </h3>
-<div id="selDiv"> 
-<abbr class="wikihover" rel="Natural_selection">Selection</abbr> is the what most people think of when they think of evolution. It is the result of competition among members of the population (for example, for a finite amount of resources), which enriches for the <abbr class="wikihover" rel="Fitness_(biology)">fittest</abbr> members of the population. Here, fitness is a function of the phenotype of the organism, that is to say, whatever feature of the organism interacts with the environment.
-</div> 
-
-<h3> Genetic Drift </h3>
-<div id="GDDiv"> 
-The <abbr class="wikihover" rel="Genetic_drift">Genetic Drift</abbr> happens due to <em>random fluctuations</em> of which members of a population are able to reproduce. Imagine two species with the <em>same fitness</em>. If there is only enough room for some of their children, than the relative numbers of the two species will fluctuate as lucky or unlucky individuals have many or few surviving children.
-</div> 
-
 
 <h3> Genetic Drift in a real population </h3>
 
@@ -78,4 +59,27 @@ By including the ethanol the fitness of individuals with the less efficient Alco
 
 <br><br><br><br><br><br>
 
+<hr>
+<h3> Genetic Drift, Selection, and Mutation</h3>
+<p>
+The three major factors that influence the evolution of a population are: genetic drift, selection, and mutation. In this section, we will explore the effects of these factors on terms in the drift-diffusion equation.
+</p>
+
+<p>
+<abbr class="wikihover" rel="Genetic_drift">Genetic Drift</abbr> is unfortunately named, since it has nothing to do with drift in the sense discussed for the past coupled lessons. As we saw above, this happens due to <em>random fluctuations</em> in which members of a population are able to reproduce, as lucky or unlucky individuals have many or few surviving children. We saw above that drift introduces pure diffusion terms into the allele frequency dynamics.
+</p>
+
+<p>
+<abbr class="wikihover" rel="Natural_selection">Selection</abbr> is the what most people think of when they think of evolution. As we saw above, selection is the result of competition among members of the population (for example, for a finite amount of resources), which enriches for the <abbr class="wikihover" rel="Fitness_(biology)">fittest</abbr> members of the population. Here, fitness is a function of the phenotype of the organism, that is to say, whatever feature of the organism interacts with the environment. We saw above that selection introduces pure drift terms into the allele frequency dynamics.
+</p>
+
+
+<p> Finally, there is mutation. <abbr class="wikihover" rel="mutation">Mutation</abbr> is the introduction of random errors into an organism's genome. Because they are random, many of the errors may not have an effect on the exact phenotype that we are interested in. The effective mutation rate can be modeled as the base rate times the probability of getting a mutation in genes that we are interested in, but, in general, mapping between <abbr class="wikihover" rel="Genotype-phenotype distinction"> genotype and phenotype</abbr> is <em> very </em> difficult to model. Mutation becomes important on longer timescales than what was studied above. Mutation introduces both a drift and a diffusion term into the allele frequency dynamics. The diffusion is due to the continuous introduction of random allele changes, while the drift term is a reflection of the fact that mutation pushes the allele frequency towards a balance. This balance occurs when both alleles are introduced at the same rate by mutation. So, the mutational drift term is a function of the current state of the population.
+</p> 
+
+<br>
+<br>
+<br>
+<br>
+<br>
 {%endblock %}
