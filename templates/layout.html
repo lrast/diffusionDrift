@@ -11,7 +11,7 @@
       <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/d3.slider.js') }}"></script>
-    
+    <link rel="stylesheet" type="text/css" media="all" href="/static/css/wikipedia-tooltip.0.1.css" />  
     {% block includes %} {% endblock %}
 </head>
 
@@ -82,6 +82,10 @@
          d3.select('#slider3').call(d3.slider().on("slide", function(evt, value) {
       d3.select('#slider3text').text(value);
     }));
+
+    $(document).ready(function(){
+    $('.wikihover').wiki_tooltip({wiki_lang : 'en'}); 
+    });
     </script>
   </body>
 </html>
