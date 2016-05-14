@@ -2,18 +2,7 @@
 {% block subtitle %} Lesson 3 {% endblock %}
 
 {% block includes %} 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<script>
 
-$(document).ready(function(){
-    $("#diffToggle").html('Variance');
-    $("#derivbutton").click(function(){
-        $("#derivDiv").toggle();
-    $('.wikihover').wiki_tooltip({wiki_lang : 'en'}); 
-    });
-});
-
-</script>
 {% endblock %}
 
 {% block body %}
@@ -69,7 +58,7 @@ Numerically solving this equation in mathematica (using a normal distribution as
     margin: 0 auto;
 }">
     </div>
-Notice that similarly to the simulated trajectories, the equations capture the tendency of the distribution to both spread out and move foreward as time passes
+Notice that similarly to the simulated trajectories, the equations capture the tendency of the distribution to both spread out and move foreward as time passes. 
 
 
 </p>
@@ -115,5 +104,18 @@ There is also a general correspondence between terms in a moment expansion and t
 <br>
 <br>
 <br>
+
+<script>
+
+$(document).ready(function(){
+    $("#diffToggle").html('Variance');
+    $("#derivbutton").click(function(){
+        $("#derivDiv").toggle(); 
+    });
+    $('.wikihover').wiki_tooltip({wiki_lang : 'en'});
+});
+
+</script>
+
 
 {%endblock %}
