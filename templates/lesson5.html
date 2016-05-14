@@ -34,7 +34,6 @@ There are three major factors that influence the evolution of a population. Thes
 <div id="mutDiv"> <abbr class="wikihover" rel="mutation">Mutation</abbr> is the introduction of random errors into an organism's genome. Because they are random, many of the errors may not have an effect on the exact phenotype that we are interested in. The effective mutation rate can be modeled as the base rate times the probability of getting a mutation in genes that we are interested in, but, in general, mapping between <abbr class="wikihover" rel="Genotype-phenotype distinction"> genotype and phenotype</abbr> is <em> very </em> difficult to model.
 </div> 
 
-<hr>
 <h3> Selection </h3>
 <div id="selDiv"> 
 <abbr class="wikihover" rel="Natural_selection">Selection</abbr> is the what most people think of when they think of evolution. It is the result of competition among members of the population (for example, for a finite amount of resources), which enriches for the <abbr class="wikihover" rel="Fitness_(biology)">fittest</abbr> members of the population. Here, fitness is a function of the phenotype of the organism, that is to say, whatever feature of the organism interacts with the environment.
@@ -42,15 +41,15 @@ There are three major factors that influence the evolution of a population. Thes
 
 <h3> Genetic Drift </h3>
 <div id="GDDiv"> 
-The <abbr class="wikihover" rel="Genetic_drift">Genetic Drift</abbr> happens due to <em>random fluctuations</em> of which members of a population are able to reproduce. Imagine two species with the <em>same fitness</em>. If there is only enough room for a some of their children, than the relative numbers of the two species will fluctuate as lucky or unlucky individuals have many or few surviving children. 
+The <abbr class="wikihover" rel="Genetic_drift">Genetic Drift</abbr> happens due to <em>random fluctuations</em> of which members of a population are able to reproduce. Imagine two species with the <em>same fitness</em>. If there is only enough room for some of their children, than the relative numbers of the two species will fluctuate as lucky or unlucky individuals have many or few surviving children.
 </div> 
 
 
-<h3> Genetic Drift and Selection in a real population </h3>
+<h3> Genetic Drift in a real population </h3>
 
-Let us now examine the distribution of allele frequencies across multiple generations in a real population. It turns out that the equations introduced for modelling particle diffusion can be used to model this process and recapitulate the observed genetic drift. Let us first take a look at the experimental data. These data are obtained from table 3 in <i>Buri P., Evolution, Vol. 10, No. 4 (Dec., 1956), pp. 367-402.</i>. We <a href="{{ url_for('static', filename='buri_data_summary.html') }}">extracted and plotted </a> them in MATLAB for you. Note the similarity between evolution of the allele frequency distributions to our particle positon distributions from <a href="/lesson1">lesson 1 </a> and <a href="/lesson2">lesson 2 </a>
+Let us now examine the distribution of allele frequencies across multiple generations in a real population. It turns out that the equations introduced for modelling particle diffusion can be used to model this process and recapitulate the observed genetic drift. Let us first take a look at the experimental data. These data are obtained from table 3 in <i>Buri P., Evolution, Vol. 10, No. 4 (Dec., 1956), pp. 367-402.</i>. We <a href="{{ url_for('static', filename='buri_data_summary.html') }}">extracted and plotted </a> them in MATLAB for you. Note the similarity between evolution of the allele frequency distributions to our particle positon distributions from <a href="/lesson1">lesson 1 </a> and <a href="/lesson2">lesson 2 </a>. <br>
 
-<a href"http://www.rpgroup.caltech.edu/publications/Garcia2016.pdf"> Garcia et al. </a> did a great job summarizing Buri's experiment, which are described in the figures below. Buri started his experiment with 107 populations of 8 male and 8 female flies that are heterozygous in a gene that determines eyecolor. Accordingly there are 16 heterozygotes with 32 alleles at the diploid bw locus in each population. If the individuals are homozygous in the bw allele they have white eyes, bw75 homozygotes have red eyes and heterozygotes have organge eyes.
+<a href"http://www.rpgroup.caltech.edu/publications/Garcia2016.pdf"> Garcia et al.</a> did a great job summarizing Buri's experiment, which are described in the figures below. Buri started his experiment with 107 populations of 8 male and 8 female flies that are heterozygous in a gene that determines eyecolor. Accordingly there are 16 heterozygotes with 32 alleles at the diploid bw locus in each population. If the individuals are homozygous in the bw allele they have white eyes, bw75 homozygotes have red eyes and heterozygotes have organge eyes.
 
  <figure style='float: left; padding: 10px 10px 10px 10px; width: 60%'>
   <img style='float: left' src="{{ url_for('static', filename='buri_scheme.png') }}" width="43%" >
@@ -59,27 +58,24 @@ Let us now examine the distribution of allele frequencies across multiple genera
   <figcaption><p style="font-size: 6pt"></p></figcaption>
 </figure>
 <br>
-Buri allowed the flies to mate and lay eggs and then removed the parent generation and let about larvae hatch in a new vial. From this vial he randomly selected 8 males and 8 females and transferred them in a new vials and counted the number of homozygotes and heterozygotes by examining eye color. As discussed in lesson 4, you can compute the allele frequencies from genotype frequencies.
+Buri allowed the flies to mate and lay eggs and then removed the parent generation and let larvae hatch. He randomly selected 8 males and 8 females and transferred them in new vials and counted the number of homozygotes and heterozygotes by examining eye color. As discussed in lesson 4, you can compute the allele frequencies from genotype frequencies.
 He charted the allele frequencies for all 107 populations over 20 generations. Buri found that in most vials the eye color is fixed, after 20 generations all individuals were homozygous. This observations is what Fisher and Wright described as Genetic Drift. Click 
-<a href="http://highered.mheducation.com/sites/dl/free/0072835125/126997/animation45.html">here </a> for an animation that explains Genetic Drift. The equations we introduced in <a href="/Lesson3">Lesson 3 </a> slightly modified to account for the fixation and used to model this process. <a href=" http://malooflab.phytonetworks.org/apps/genetic-drift-markov/"  target="_blank">Here</a>  you can  interactively plot the theoretical allele frequencies for various conditions. Can you modify the parameters and recapitulate Buri's data?
+<a href="http://highered.mheducation.com/sites/dl/free/0072835125/126997/animation45.html">here</a> for an animation that explains Genetic Drift. The equations we introduced in <a href="/Lesson3">Lesson 3</a> slightly modified to account for the fixation and used to model this process. <a href=" http://malooflab.phytonetworks.org/apps/genetic-drift-markov/"  target="_blank">Here</a>  you can  interactively plot the theoretical allele frequencies for various conditions. Can you modify the parameters and recapitulate Buri's data?
+<br><br><br><br><br><br><br><br><br><br><br><br><hr>
+<h3> Selection in a real population </h3>
+
+In another experiment et al chose a very similar experimental approach. They however run the experiment twice, in the absence or prensence of ethanol and monitored the frequency of two different Alcohol Dehydrogenase alleles. 
+By including the ethanol the fitness of individuals with the less efficient Alcohol Dehydrogenase is decreased (see inset below - Figure 16 of 
+<a href"http://www.rpgroup.caltech.edu/publications/Garcia2016.pdf"> Garcia et al.</a>).  You can explore the effect of small population size, fitness and mutation rate <a href="https://evobir.shinyapps.io/wf_model/">here</a>. Again, note the similarity to <a href="https://evobir.shinyapps.io/brownian_motion/">bronian motion </a>.
 
 
-<figure style='float: left; margin: 0 30px 50px 0; width: 60%'>
+<center>
+<figure style='align: center ; margin: 0 30px 50px 0; width: 80%'>
 <img src="{{ url_for('static', filename='buri_selection.png') }}" width="100%" >
   <figcaption><p style="font-size: 6pt"></p></figcaption>
 </figure>
+</center>
 
-
-
-<br>
-
-
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
+<br><br><br><br><br><br>
 
 {%endblock %}
