@@ -3,6 +3,15 @@
 
 {% block includes %} 
 
+<script>
+
+$(document).ready(function(){
+    $("#derivbutton").click(function(){
+        $("#derivDiv").toggle();
+});
+
+</script>
+
 {% endblock %}
 
 {% block body %}
@@ -26,7 +35,7 @@ First, our intuition for diffusion and drift can be captured in terms of feature
 In one dimension, this intuition can be written down with diffusion and drift coefficients <em>v</em> and <em>D</em> as: <br>
 <img src="http://latex.codecogs.com/gif.latex? \dpi{300} \frac{\partial p(x, t)}{\partial t}= - v \frac{\partial p(x, t)}{\partial x} + D \frac{\partial^2 p(x, t)}{\partial x^2}" border="0" height="40pt"/> <br>
 
-This is a <a href="http://ocw.mit.edu/courses/mathematics/18-152-introduction-to-partial-differential-equations-fall-2011/index.htm"><em>partial differential equation</em></a> because it contains derivatives of <em>p</em> with respect to multiple variables. However, we can get an idea of what it is describing by looking at the terms individually. We won't give a full derivation, but we highlight some interesting aspects of the mathematics, see the button below.
+This is a <abbr class="wikihover" rel="partial differential equation" >partial differential equation</abbr> (<a href="http://ocw.mit.edu/courses/mathematics/18-152-introduction-to-partial-differential-equations-fall-2011/index.htm">see also</a>) because it contains derivatives of <em>p</em> with respect to multiple variables. However, we can get an idea of what it is describing by looking at the terms individually. We won't give a full derivation, but we highlight some interesting aspects of the mathematics, see the button below.
 </p>
 <p>
 First, the left hand side:<br>
@@ -45,7 +54,7 @@ Dividing by <em>dx</em> and <em>dt</em> turns these into derivatives (also, <img
 <p>
 Finally,<br>
 <img src="http://latex.codecogs.com/gif.latex? \dpi{300}  D \frac{\partial^2 p(x, t)}{\partial x^2} " border="0" height="40pt"/> <br>
-This is the second derivative with respect to <em>x</em>. It describe the <a href="https://en.wikipedia.org/wiki/Inflection_point"><em>concavity</em></a> of the function, which is the curvature. This is equivalent to how the function at a point x compares to the neighbors in its vicinity. Imagine a point on a curve that is higher than most of the points around it in a small interval. At this point, the curve must be mostly curving downwards. So, the concavity, and hence the second derivative is negative. This term forces points in the probability distribution, <em>p</em> to approach their neighbors, spreading it out over time.
+This is the second derivative with respect to <em>x</em>. It describes the <abbr class="wikihover" rel="concave function" >concavity</abbr> of the function, which is the curvature. This is equivalent to how the function at a point x compares to the neighbors in its vicinity. Imagine a point on a curve that is higher than most of the points around it in a small interval. At this point, the curve must be mostly curving downwards. So, the concavity, and hence the second derivative is negative. This term forces points in the probability distribution, <em>p</em> to approach their neighbors, spreading it out over time.
 
 
 </p>
@@ -73,7 +82,7 @@ Notice that similarly to the simulated trajectories, the equations capture the t
 <div id="derivDiv" style="display:none;"> 
 <br>
 <p>
-At this point, you may be wondering how we got from the <a href="https://en.wikipedia.org/wiki/Moment_(mathematics)"><em>moments</em></a> of the distribution (namely the mean and variance) to the derivatives of the probability function. After all, the change in the first moment (mean) is the coefficient for the first derivative term, and the change in the second moment (variance) is the coefficient for the second derivative term. The answer is that these terms come from a Taylor expansion. If we model changes in the probability distribution due to rates of flow in and out of a given point: </p> 
+At this point, you may be wondering how we got from the <abbr class="wikihover" rel="Moment_(mathematics)" > moments</abbr> of the distribution (namely the mean and variance) to the derivatives of the probability function. After all, the change in the first moment (mean) is the coefficient for the first derivative term, and the change in the second moment (variance) is the coefficient for the second derivative term. The answer is that these terms come from a Taylor expansion. If we model changes in the probability distribution due to rates of flow in and out of a given point: </p> 
 <p>
 <img src="http://latex.codecogs.com/gif.latex? \dpi{300} \frac{\partial p(x, t)}{\partial t} = \int dy " border="0" height="40pt"/> (net flow into <em>x</em> from <em>y</em> away)
 <img src="http://latex.codecogs.com/gif.latex? \dpi{300}  p(x+y,t)" border="0" height="20pt"/> 
@@ -95,7 +104,7 @@ There are some complications involving the cancellation of the first term in the
 </p>
 <hr>
 <p>
-There is also a general correspondence between terms in a moment expansion and terms in a Taylor expansion. This is captured by the <a href="https://en.wikipedia.org/wiki/Moment-generating_function"> <em>moment generating function</em></a> of a probability distribution (<a href="https://www.statlect.com/fundamentals-of-probability/moment-generating-function"><em>see also</em></a>). The moment generating function is an <a href="https://en.wikipedia.org/wiki/Integral_transform"><em>integral transformation</em></a> (much like the one above) of the probability density function (pdf). Where it exists, it has the property that its nth derivative at zero (the nth coefficient in it's Maclaurin series) is the nth moment of distribution. So, the <a href="https://en.wikipedia.org/wiki/Laplace_transform"><em>transformation</em></a> provides a correspondence between Taylor expansions and moment expansions. It is interesting to note that the moment generating function does not always exist. One distribution without a moment generating function is the <a href="https://en.wikipedia.org/wiki/Cauchy_distribution"><em>Cauchy distribution</em></a>.
+There is also a general correspondence between terms in a moment expansion and terms in a Taylor expansion. This is captured by the <abbr class="wikihover" rel="Moment-generating_function" > moment generating function</abbr> of a probability distribution (<a href="https://www.statlect.com/fundamentals-of-probability/moment-generating-function"><em>see also</em></a>). The moment generating function is an <abbr class="wikihover" rel="Integral_transform" > integral transformation</abbr> (much like the one above) of the probability density function (pdf). Where it exists, it has the property that its nth derivative at zero (the nth coefficient in it's Maclaurin series) is the nth moment of distribution. So, the <abbr class="wikihover" rel="Laplace_transform">transformation</abbr> provides a correspondence between Taylor expansions and moment expansions. It is interesting to note that the moment generating function does not always exist. One distribution without a moment generating function is the <abbr class="wikihover" rel="Cauchy_distribution">Cauchy distribution</abbr>.
 </p>
 </div>
 
