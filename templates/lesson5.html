@@ -46,10 +46,11 @@ The <abbr class="wikihover" rel="Genetic_drift">Genetic Drift</abbr> happens due
 </div> 
 
 
-Let us now examine the distribution of allele frequencies across multiple generations in a real population. It turns out that the equations introduced for modelling particle diffusion can be used to model this process. Let us again first look at experimental data. These data are obtained from table 3 in <i>Buri P., Evolution, Vol. 10, No. 4 (Dec., 1956), pp. 367-402.</i>. We <a href="{{ url_for('static', filename='buri_data_summary.html') }}">extracted and plotted </a> them in MATLAB for you. Note the similrity between evolution of the allele frequency distributions to our particle positon distributions from <a href="/lesson1">lesson 1 </a> and <a href="/lesson2">lesson 2 </a>
+<h3> Genetic Drift and Selection in a real population </h3>
 
+Let us now examine the distribution of allele frequencies across multiple generations in a real population. It turns out that the equations introduced for modelling particle diffusion can be used to model this process and recapitulate the observed genetic drift. Let us first take a look at the experimental data. These data are obtained from table 3 in <i>Buri P., Evolution, Vol. 10, No. 4 (Dec., 1956), pp. 367-402.</i>. We <a href="{{ url_for('static', filename='buri_data_summary.html') }}">extracted and plotted </a> them in MATLAB for you. Note the similarity between evolution of the allele frequency distributions to our particle positon distributions from <a href="/lesson1">lesson 1 </a> and <a href="/lesson2">lesson 2 </a>
 
- et al. did a great job summarizing Buri's experiment, which are described in the figures below. Buri started his experiment with 107 populations of 8 male and 8 female flies that are heterozygous in a gene that determines eyecolor. Accordingly there are 16 heterozygotes with 32 alleles at the diploid bw locus in each population. If the individuals are homozygous in the bw allele they have white eyes, bw75 homozygotes have red eyes and heterozygotes have organge eyes.
+<a href"http://www.rpgroup.caltech.edu/publications/Garcia2016.pdf"> Garcia et al. </a> did a great job summarizing Buri's experiment, which are described in the figures below. Buri started his experiment with 107 populations of 8 male and 8 female flies that are heterozygous in a gene that determines eyecolor. Accordingly there are 16 heterozygotes with 32 alleles at the diploid bw locus in each population. If the individuals are homozygous in the bw allele they have white eyes, bw75 homozygotes have red eyes and heterozygotes have organge eyes.
 
  <figure style='float: left; padding: 10px 10px 10px 10px; width: 60%'>
   <img style='float: left' src="{{ url_for('static', filename='buri_scheme.png') }}" width="43%" >
@@ -61,17 +62,6 @@ Let us now examine the distribution of allele frequencies across multiple genera
 Buri allowed the flies to mate and lay eggs and then removed the parent generation and let about larvae hatch in a new vial. From this vial he randomly selected 8 males and 8 females and transferred them in a new vials and counted the number of homozygotes and heterozygotes by examining eye color. As discussed in lesson 4, you can compute the allele frequencies from genotype frequencies.
 He charted the allele frequencies for all 107 populations over 20 generations. Buri found that in most vials the eye color is fixed, after 20 generations all individuals were homozygous. This observations is what Fisher and Wright described as Genetic Drift. Click 
 <a href="http://highered.mheducation.com/sites/dl/free/0072835125/126997/animation45.html">here </a> for an animation that explains Genetic Drift. The equations we introduced in <a href="/Lesson3">Lesson 3 </a> slightly modified to account for the fixation and used to model this process. <a href=" http://malooflab.phytonetworks.org/apps/genetic-drift-markov/"  target="_blank">Here</a>  you can  interactively plot the theoretical allele frequencies for various conditions. Can you modify the parameters and recapitulate Buri's data?
-
-
-<br>
-<a href="https://evobir.shinyapps.io/wf_model/"  target="_blank">Fisher-Wright</a>
-
-
-
-<a href="http://rosetta.ahmedmoustafa.io/drift/"  target="_blank">Drift of multiple alles</a>
-
-<a href="http://rosetta.ahmedmoustafa.io/selection/"  target="_blank">Selection</a>
-
 
 
 <figure style='float: left; margin: 0 30px 50px 0; width: 60%'>
