@@ -24,27 +24,69 @@ $(document).ready(function(){
 
 {% block body %}
 
-
-
-<a href="http://highered.mheducation.com/sites/dl/free/0072835125/126997/25-07.swf"  target="_blank">Animation</a>
-
-
-http://rosetta.ahmedmoustafa.io/selection/
-
-http://rosetta.ahmedmoustafa.io/drift/
-
-http://malooflab.phytonetworks.org/apps/genetic-drift-markov/
-
-http://coleoguy.github.io/evobir.html
-
-https://evobir.shinyapps.io/wf_model/
-
-http://www.slideshare.net/waqasiwaqas/bisl-05-evolution-and-genetics-37233634
-
-http://highered.mheducation.com/sites/dl/free/0072835125/126997/animation45.html
-
-<h1> Mutation, Selection, and Wright effect</h1>
+<h1> Genetic Drift, Mutation, Selection</h1>
 <hr>
+
+Let us now examine the distribution of allele frequencies across multiple generations in a real population. It turns out that the equations introduced for modelling particle diffusion can be used to model this process. Let us again first look at experimental data. These data are obtained from table 3 in <i>Buri P., Evolution, Vol. 10, No. 4 (Dec., 1956), pp. 367-402.</i>. We <a href="{{ url_for('static', filename='buri_data_sum.png') }}">extracted and plotted </a> them in MATLAB for you. Note the similrity between evolution of the allele frequency distributions to our particle positon distributions from <a href="/lesson1">lesson 1 </a> and <a href="/lesson2">lesson 2 </a>
+
+
+ et al. did a great job summarizing Buri's experiment, which are described in the figures below. Buri started his experiment with 107 populations of 8 male and 8 female flies that are heterozygous in a gene that determines eyecolor. Accordingly there are 16 heterozygotes with 32 alleles at the diploid bw locus in each population. If the individuals are homozygous in the bw allele they have white eyes, bw75 homozygotes have red eyes and heterozygotes have organge eyes.
+
+ <figure style='float: left; padding: 10px 10px 10px 10px; width: 60%'>
+  <img style='float: left' src="{{ url_for('static', filename='buri_scheme.png') }}" width="43%" >
+  <img style='float: left' src="{{ url_for('static', filename='buri_genes.png') }}" width="57%" >
+    <img src="{{ url_for('static', filename='buri_data2.png') }}" width="100%" >    
+  <figcaption><p style="font-size: 6pt"></p></figcaption>
+</figure>
+<br>
+Buri allowed the flies to mate and lay eggs and then removed the parent generation and let about larvae hatch in a new vial. From this vial he randomly selected 8 males and 8 females and transferred them in a new vials and counted the number of homozygotes and heterozygotes by examining eye color. As discussed in lesson 4, you can compute the allele frequencies from genotype frequencies.
+He charted the allele frequencies for all 107 populations over 20 generations. Buri found that in most vials the eye color is fixed, after 20 generations all individuals were homozygous. This observations is what Fisher and Wright described as Genetic Drift. Click 
+<a href="http://highered.mheducation.com/sites/dl/free/0072835125/126997/animation45.html">here </a> for an animation that explains Genetic Drift. The equations we introduced in <a href="/Lesson3">Lesson 3 </a> slightly modified to account for the fixation and used to model this process. Here you can interactively plot these equations <a href=" http://malooflab.phytonetworks.org/apps/genetic-drift-markov/"  target="_blank">simulation</a>. Can you modify the parameters and recapitulate Buri's data?
+
+
+<br>
+<a href="https://evobir.shinyapps.io/wf_model/"  target="_blank">Fisher-Wright</a>
+
+
+
+<a href="http://rosetta.ahmedmoustafa.io/drift/"  target="_blank">Drift of multiple alles</a>
+
+<a href="http://rosetta.ahmedmoustafa.io/selection/"  target="_blank">Selection</a>
+
+
+Flies were allowed to mate randomly, produce eggs, and the adults were removed prior to emergence of the next generation of flies.
+
+Buri then randomly chose 8 males and 8 females from the offspring of each vial and placed them in a fresh vial.
+
+This was done separately for each of the 107 populations.
+
+ 
+
+Given the alleles in each starting population, what are the expected genotype frequencies under Hardy-Weinberg equilibrium? (see Figure 6.2 in text)
+
+bw/bw    
+
+bw/bw75   
+
+bw75/bw75
+
+.25	.5	.25
+     
+
+Buri continued this regimen of randomly taking 8 males and 8 females from each set of offspring and using them to establish the next generation.
+
+He did this over 19 generations, and in each generation he recorded the frequencies of the bw and bw75 alleles in each of the 107 populations.
+
+
+
+<figure style='float: left; margin: 0 30px 50px 0; width: 60%'>
+<img src="{{ url_for('static', filename='buri_selection.png') }}" width="100%" >
+  <figcaption><p style="font-size: 6pt"></p></figcaption>
+</figure>
+
+
+
+<br>
 There are three major factors that influence the evolution of a population. These are: mutation, selection, and the Sewall Wright effect. In this section, we will explore the effects of each of these factors on an evolving population.
 <hr>
 <h3> Mutation</h3>
