@@ -32,41 +32,31 @@ In the last section, we showed how systems that evolve over time can be describe
 First, our intuition for diffusion and drift can be captured in terms of features of the probability distribution. Diffusion spreads the distribution out, so it should scale with the rate of change of the <a href="https://en.wikipedia.org/wiki/Variance"><em>variance</em></a> or <a href="https://en.wikipedia.org/wiki/Standard_deviation"><em>standard deviation</em></a> of the distribution. Drift moves the whole distribution, so it should correspond to changes in the average or <a href="https://en.wikipedia.org/wiki/Expected_value"><em>mean</em></a> of the distribution.
 </p>
 
-<div>
-<form action="{{ url_for('get_toy') }}" method="GET">
-    <fieldset class="form-group">
-        <input class='sim' type=Submit name='action' value="Run">
-    </fieldset>
-</form>
-
-
- </div>
-
 
 <hr>
 <p>
 In one dimension, this intuition can be written down with diffusion and drift coefficients <em>v</em> and <em>D</em> as: <br>
-<img src="http://latex.codecogs.com/gif.latex?\frac{\partial p(x, t)}{\partial t}= - v \frac{\partial p(x, t)}{\partial x} + D \frac{\partial^2 p(x, t)}{\partial x^2}" border="0"/> <br>
+<img src="http://latex.codecogs.com/gif.latex? \dpi{300} \frac{\partial p(x, t)}{\partial t}= - v \frac{\partial p(x, t)}{\partial x} + D \frac{\partial^2 p(x, t)}{\partial x^2}" border="0" height="40pt"/> <br>
 
 This is a <a href="http://ocw.mit.edu/courses/mathematics/18-152-introduction-to-partial-differential-equations-fall-2011/index.htm"><em>partial differential equation</em></a> because it contains derivatives of <em>p</em> with respect to multiple variables. However, we can get an idea of what it is describing by looking at the terms individually. We won't give a full derivation, but we highlight some interesting aspects of the mathematics, see the button below.
 </p>
 <p>
 First, the left hand side:<br>
-<img src="http://latex.codecogs.com/gif.latex?\frac{\partial p(x, t)}{\partial t}"/><br>
+<img src="http://latex.codecogs.com/gif.latex? \dpi{300} \frac{\partial p(x, t)}{\partial t}" border=0 height="40pt"/><br>
 This term corresponds to the change in how probable it is to be at a point (<em>x</em>, <em>t</em>) over time. 
 </p>
 
 <p>
 Next,<br>
-<img src="http://latex.codecogs.com/gif.latex?- v \frac{\partial p(x, t)}{\partial x} " border="0"/> <br>
+<img src="http://latex.codecogs.com/gif.latex? \dpi{300} - v \frac{\partial p(x, t)}{\partial x} " border="0" height="40pt" /> <br>
 This describes flow forward along the <em>x</em> axis at a rate <em>v</em>. Imagine a distribution is moving along the x axis over time. At each time step, the next value of <em>p</em> is just the value of <em>p</em> a step back in <em>x</em>: <br>
-<img src="http://latex.codecogs.com/gif.latex? p(t+dt, x) = p(t, x -dx) " border="0"/> <br>
-Dividing by <em>dx</em> and <em>dt</em> turns these into derivatives (also, <img src="http://latex.codecogs.com/gif.latex? \frac{\partial x}{\partial t} = v" border="0"/> ).
+<img src="http://latex.codecogs.com/gif.latex? \dpi{300}  p(t+dt, x) = p(t, x -dx) " border="0" height="20pt"/> <br>
+Dividing by <em>dx</em> and <em>dt</em> turns these into derivatives (also, <img src="http://latex.codecogs.com/gif.latex? \dpi{300}  \frac{\partial x}{\partial t} = v" border="0" height="35pt" /> ).
 </p>
 
 <p>
 Finally,<br>
-<img src="http://latex.codecogs.com/gif.latex? D \frac{\partial^2 p(x, t)}{\partial x^2} " border="0"/> <br>
+<img src="http://latex.codecogs.com/gif.latex? \dpi{300}  D \frac{\partial^2 p(x, t)}{\partial x^2} " border="0" height="40pt"/> <br>
 This is the second derivative with respect to <em>x</em>. It describe the <a href="https://en.wikipedia.org/wiki/Inflection_point"><em>concavity</em></a> of the function, which is the curvature. This is equivalent to how the function at a point x compares to the neighbors in its vicinity. Imagine a point on a curve that is higher than most of the points around it in a small interval. At this point, the curve must be mostly curving downwards. So, the concavity, and hence the second derivative is negative. This term forces points in the probability distribution, <em>p</em> to approach their neighbors, spreading it out over time.
 
 
@@ -78,18 +68,29 @@ This is the second derivative with respect to <em>x</em>. It describe the <a hre
 <strong> More: </strong>
 </button>
 <div id="derivDiv" style="display:none;"> 
-<p>
-At this point, you may be wondering how we got from the <a href="https://en.wikipedia.org/wiki/Moment_(mathematics)"><em>moments</em></a> of the distribution (namely the mean and variance) to the derivatives of the probability function. After all, the change in the first moment (mean) is the coefficient for the first derivative term, and the change in the second moment (variance) is the coefficient for the second derivative term. The answer is that these terms come from a Taylor expansion. If we model changes in the probability distribution due to rates of flow in and out of a given point: <br>
-<img src="http://latex.codecogs.com/gif.latex? \frac{\partial p(x, t)}{\partial t} = \int dy " border="0"/> (net flow into <em>x</em> from <em>y</em>) <img src="http://latex.codecogs.com/gif.latex? p(x,t) = \int dy y \frac{\partial}{\partial x} p(x,t) " border="0"/> (net flow into <em>x</em> from <em>y</em>) + <img src="http://latex.codecogs.com/gif.latex?y \frac{\partial^2}{\partial x^2} p(x,y) " border="0"/> (net flow into <em>x</em> from <em>y</em>) + ...
 <br>
-<img src="http://latex.codecogs.com/gif.latex? = \frac{\partial}{\partial x} p(x,t) \int dy " border="0"/>
-(net flow into <em>x</em> from <em>y</em>)
-
-
-</p>
 <p>
-For more information, check out this the nice derivation in <a href="http://ocw.mit.edu/courses/physics/8-592j-statistical-physics-in-biology-spring-2011/index.htm"><em>this course.</em></a>
+At this point, you may be wondering how we got from the <a href="https://en.wikipedia.org/wiki/Moment_(mathematics)"><em>moments</em></a> of the distribution (namely the mean and variance) to the derivatives of the probability function. After all, the change in the first moment (mean) is the coefficient for the first derivative term, and the change in the second moment (variance) is the coefficient for the second derivative term. The answer is that these terms come from a Taylor expansion. If we model changes in the probability distribution due to rates of flow in and out of a given point: </p> 
+<p>
+<img src="http://latex.codecogs.com/gif.latex? \dpi{300} \frac{\partial p(x, t)}{\partial t} = \int dy " border="0" height="40pt"/> (net flow into <em>x</em> from <em>y</em> away)
+<img src="http://latex.codecogs.com/gif.latex? \dpi{300}  p(x+y,t)" border="0" height="20pt"/> 
+<br> 
+<img src="http://latex.codecogs.com/gif.latex? \dpi{300}  = \int dy y \frac{\partial}{\partial x} p(x,t) " border="0" height="40pt" /> (net flow into <em>x</em> from <em>y</em> away) 
++ <img src="http://latex.codecogs.com/gif.latex? \dpi{300}  \int dy y^2 \frac{\partial^2}{\partial x^2} p(x,y) " border="0" height="40pt"/> (net flow into <em>x</em> from <em>y</em> away) + ...
+<br>
+<img src="http://latex.codecogs.com/gif.latex? \dpi{300}  = \frac{\partial}{\partial x} p(x,t) \int dy  y" border="0" height="40pt" />
+(net flow into <em>x</em> from <em>y</em> away) +
+<img src="http://latex.codecogs.com/gif.latex? \dpi{300}  \frac{\partial^2}{\partial x^2} p(x,y) \int dy y^2 " border="0" height="40pt" /> (net flow into <em>x</em> from <em>y</em> away) + ...
+
+<br>
+So, the coefficients are the moments of the net flow rate!
 </p>
+
+<br>
+<p>
+There are some complications involving the cancellation of the first term in the taylor expansion that merit a careful treatment. For more information, check out the nice derivation in <a href="http://ocw.mit.edu/courses/physics/8-592j-statistical-physics-in-biology-spring-2011/index.htm"><em>this course.</em></a>
+</p>
+<hr>
 <p>
 There is also a general correspondence between terms in a moment expansion and terms in a Taylor expansion. This is captured by the <a href="https://en.wikipedia.org/wiki/Moment-generating_function"> <em>moment generating function</em></a> of a probability distribution. The moment generating function is an <a href="https://en.wikipedia.org/wiki/Integral_transform"><em>integral transformation</em></a> (much like the one above) of the probability density function (pdf). Where it exists, it has the property that its nth derivative at zero (the nth coefficient in it's Maclaurin series) is the nth moment of distribution. So, the <a href="https://en.wikipedia.org/wiki/Laplace_transform"><em>transformation</em></a> provides a correspondence between Taylor expansions and moment expansions. It is interesting to note that the moment generating function does not always exist. One distribution without a moment generating function is the <a href="https://en.wikipedia.org/wiki/Cauchy_distribution"><em>Cauchy distribution</em></a>.
 </p>
