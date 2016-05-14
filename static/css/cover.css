@@ -93,6 +93,7 @@ background-color: #333;
   color: #fff; /* IE8 proofing */
   opacity: 0.9;
   border-bottom: 4px solid transparent;
+  text-decoration: none;
 }
 .masthead-nav > li > a:hover,
 .masthead-nav > li > a:focus {
